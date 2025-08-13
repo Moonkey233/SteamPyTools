@@ -69,18 +69,18 @@ def get_can_buy_from_steam_with_cache(url, headers, cookies, cacheInfo):
 
 
 if __name__ == '__main__':
-    sort_key = configs.get_base_config('sort_key', '')
-    page_size = configs.get_base_config('page_size', 0)
+    sort_key        = configs.get_base_config('sort_key', '')
+    page_size       = configs.get_base_config('page_size', 0)
     loop_sleep_time = configs.get_base_config('loop_sleep_time', 0)
 
-    max_price = configs.get_filter_config('max_price', 0)
-    max_discount = configs.get_filter_config('max_discount', 0)
-    must_have_card = configs.get_filter_config('must_have_card', False)
-    must_not_free = configs.get_filter_config('must_not_free', False)
+    max_price       = configs.get_filter_config('max_price', 0)
+    max_discount    = configs.get_filter_config('max_discount', 0)
+    must_have_card  = configs.get_filter_config('must_have_card', False)
+    must_not_free   = configs.get_filter_config('must_not_free', False)
 
-    max_budget = configs.get_pay_config('max_budget', 0)
-    max_order = configs.get_pay_config('max_order', 0)
-    confirm_pause = configs.get_pay_config('confirm_pause', True)
+    max_budget      = configs.get_pay_config('max_budget', 0)
+    max_order       = configs.get_pay_config('max_order', 0)
+    confirm_pause   = configs.get_pay_config('confirm_pause', True)
 
     buy_list = []
 
@@ -102,27 +102,27 @@ if __name__ == '__main__':
             print('Steam Cookie Expired, Please Login')
             exit(0)
 
-        cache = load_cache(must_have_card, must_not_free)
+        cache       = load_cache(must_have_card, must_not_free)
         page_number = configs.get_base_config('page_number', 1)
-        max_page = configs.get_base_config('max_page', 1)
+        max_page    = configs.get_base_config('max_page', 1)
 
         try:
             while max_page != 0:
                 print('\nPAGE NUMBER:', page_number)
                 rank_query = {
                     'pageNumber': page_number,
-                    'pageSize': page_size,
-                    'sort': sort_key,
-                    'order': 'asc',
-                    'startDate': '',
-                    'endDate': '',
+                    'pageSize'  : page_size,
+                    'sort'      : sort_key,
+                    'order'     : 'asc',
+                    'startDate' : '',
+                    'endDate'   : '',
                 }
 
                 py_resp = requests.get(
-                    url=const.py_rank_url,
-                    params=rank_query,
-                    headers=const.py_headers,
-                    cookies=const.py_cookies
+                    url     = const.py_rank_url,
+                    params  = rank_query,
+                    headers = const.py_headers,
+                    cookies = const.py_cookies
                 )
 
                 content = util.get_json_value(py_resp.json(), ['result', 'content'], [])
@@ -150,12 +150,12 @@ if __name__ == '__main__':
                     game_id = util.get_json_value(info, ['id'], '')
 
                     buy_game_info = {
-                        'name': py_name,
-                        'steam': target_url,
-                        'py': const.py_detail_url + game_id,
-                        'py_price': util.get_json_value(info, ['keyTxAmt'], ''),
-                        'steam_price': util.get_json_value(info, ['oriPrice'], ''),
-                        'discount': util.get_json_value(info, ['keyDiscount'], ''),
+                        'name'          : py_name,
+                        'steam'         : target_url,
+                        'py'            : const.py_detail_url + game_id,
+                        'py_price'      : util.get_json_value(info, ['keyTxAmt'], ''),
+                        'steam_price'   : util.get_json_value(info, ['oriPrice'], ''),
+                        'discount'      : util.get_json_value(info, ['keyDiscount'], ''),
                     }
 
                     if get_can_buy_from_steam_with_cache(target_url, const.steam_headers, const.steam_cookies, cache):

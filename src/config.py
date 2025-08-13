@@ -3,7 +3,7 @@ import const
 
 # ==================== 基本设置 ====================
 verify_url      = 'https://store.steampowered.com/app/504230'   # Celeste蔚蓝，这里选一个Steam库里有的游戏，用于验证Cookie是否过期
-page_number     = 21                                             # 从py的第几页开始抓取
+page_number     = 1                                             # 从py的第几页开始抓取
 max_page        = 50                                            # 一共抓取py前多少页
 page_size       = 50                                            # 每一页的大小
 loop_sleep_time = 2                                             # 循环检测间隔时间，单位：秒，>=0时只执行一次
@@ -44,41 +44,41 @@ email_addr  = ['Moonkey233@foxmail.com']    # 收件人列表
 
 
 baseConfig = {
-    'verify_url':       verify_url,
-    'page_number':      page_number,
-    'max_page':         max_page,
-    'page_size':        page_size,
-    'loop_sleep_time':  loop_sleep_time,
-    'sort_key':         sort_key,
+    'verify_url'        : verify_url,
+    'page_number'       : page_number,
+    'max_page'          : max_page,
+    'page_size'         : page_size,
+    'loop_sleep_time'   : loop_sleep_time,
+    'sort_key'          : sort_key,
 }
 
 filterConfig = {
-    'max_price':        max_price,
-    'max_discount':     max_discount,
-    'must_have_card':   must_have_card,
-    'must_not_free':    must_not_free,
+    'max_price'     : max_price,
+    'max_discount'  : max_discount,
+    'must_have_card': must_have_card,
+    'must_not_free' : must_not_free,
 }
 
 payConfig = {
-    'auto_pay':         auto_pay,
-    'use_balance':      use_balance,
-    'confirm_pause':    confirm_pause,
-    'pause_beep':       pause_beep,
-    'max_budget':       max_budget,
-    'max_order':        max_order,
-    'list_size':        list_size,
-    'pay_time':         pay_time,
-    'promo_code_id':    promo_code_id,
-    'pay_type':         pay_type,
+    'auto_pay'      : auto_pay,
+    'use_balance'   : use_balance,
+    'confirm_pause' : confirm_pause,
+    'pause_beep'    : pause_beep,
+    'max_budget'    : max_budget,
+    'max_order'     : max_order,
+    'list_size'     : list_size,
+    'pay_time'      : pay_time,
+    'promo_code_id' : promo_code_id,
+    'pay_type'      : pay_type,
 }
 
 emailConfig = {
-    'auto_email':       auto_email,
-    'smtp_server':      smtp_server,
-    'smtp_port':        smtp_port,
-    'smtp_from':        smtp_from,
-    'smtp_pwd':         smtp_pwd,
-    'email_addr':       email_addr,
+    'auto_email'    : auto_email,
+    'smtp_server'   : smtp_server,
+    'smtp_port'     : smtp_port,
+    'smtp_from'     : smtp_from,
+    'smtp_pwd'      : smtp_pwd,
+    'email_addr'    : email_addr,
 }
 
 class Config:

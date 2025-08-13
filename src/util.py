@@ -76,10 +76,10 @@ def parse_curl_file(file_path):
 
 def send_email(title, content, email_addr, smtp_from, smtp_server, smtp_port, smtp_pwd):
     """发送邮件"""
-    msg = MIMEText(content, 'plain', 'utf-8')
-    msg['From'] = Header(smtp_from)
-    msg['To'] = Header(','.join(email_addr))
-    msg['Subject'] = Header(title, 'utf-8')
+    msg             = MIMEText(content, 'plain', 'utf-8')
+    msg['From']     = Header(smtp_from)
+    msg['To']       = Header(','.join(email_addr))
+    msg['Subject']  = Header(title, 'utf-8')
 
     try:
         server = smtplib.SMTP_SSL(smtp_server, smtp_port)
@@ -119,11 +119,11 @@ def get_json_value(data, path, default=None):
 def print_buy_game(game):
     """格式化输出游戏"""
     print(
-        '[Name]:', game['name'],
-        '[CDK]:', game['py_price'],
-        '[Steam]:', game['steam_price'],
-        '[Discount]:', game['discount'],
-        game['steam'], game['py']
+        '[Name]:',      game['name'],
+        '[CDK]:',       game['py_price'],
+        '[Steam]:',     game['steam_price'],
+        '[Discount]:',  game['discount'],
+        game['steam'],  game['py']
     )
 
 

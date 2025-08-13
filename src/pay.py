@@ -1,5 +1,4 @@
 import time
-
 import util
 import const
 import requests
@@ -20,12 +19,12 @@ def pay_order(game_id, price, discount, steam_price):
         time_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(pay_map[game_id]))
         return False, f'Already paid for {game_id}, will not repay until {time_str}', 0
 
-    max_budget = configs.get_pay_config('max_budget', 0)
-    max_order = configs.get_pay_config('max_order', 0)
-    pay_type = configs.get_pay_config('pay_type', 'AL')
-    promo_code_id = configs.get_pay_config('promo_code_id', '')
-    use_balance = configs.get_pay_config('use_balance', False)
-    confirm_pause = configs.get_pay_config('confirm_pause', True)
+    max_budget      = configs.get_pay_config('max_budget', 0)
+    max_order       = configs.get_pay_config('max_order', 0)
+    pay_type        = configs.get_pay_config('pay_type', 'AL')
+    promo_code_id   = configs.get_pay_config('promo_code_id', '')
+    use_balance     = configs.get_pay_config('use_balance', False)
+    confirm_pause   = configs.get_pay_config('confirm_pause', True)
 
     if total_price >= max_budget or total_order >= max_order:
         return False, f'Out of Budget: {total_price}r/{max_budget}r {total_order}/{max_order}', -1
@@ -56,10 +55,10 @@ def pay_order(game_id, price, discount, steam_price):
             input('Press Enter to Continue: ')
 
         payResp = requests.post(
-            url=const.py_pay_order_url,
-            headers=const.py_headers,
-            cookies=const.py_cookies,
-            data=data
+            url     = const.py_pay_order_url,
+            headers = const.py_headers,
+            cookies = const.py_cookies,
+            data    = data
         )
         pay_data = payResp.json()
 
