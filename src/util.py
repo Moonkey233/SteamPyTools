@@ -132,7 +132,7 @@ def print_buy_list(game_list):
     print()
 
 
-def beep(frequency=500, duration=500, times=2):
+def beep(frequency=500, duration=500, times=1):
     """调用蜂鸣器发声"""
     for i in range(times):
         winsound.Beep(frequency, duration)
