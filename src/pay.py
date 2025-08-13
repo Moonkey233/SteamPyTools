@@ -1,3 +1,5 @@
+import time
+
 import util
 import const
 import requests
@@ -8,9 +10,15 @@ from config import configs
 total_price = 0
 total_order = 0
 
+pay_map = {}
+
 def pay_order(game_id, price, discount, steam_price):
     """根据游戏id发起最优符合条件的支付请求，不符合条件不支付"""
-    global total_price, total_order
+    global total_price, total_order, pay_map
+
+    if game_id in pay_map and pay_map[game_id] > time.time():
+        time_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(pay_map[game_id]))
+        return False, f'Already paid for {game_id}, will not repay until {time_str}', 0
 
     max_budget = configs.get_pay_config('max_budget', 0)
     max_order = configs.get_pay_config('max_order', 0)
@@ -61,6 +69,7 @@ def pay_order(game_id, price, discount, steam_price):
             pay_price = float(util.get_json_value(pay_data, ['result', 'payPrice'], ''))
             total_price += pay_price
             total_order += 1
+            pay_map[game_id] = time.time() + configs.get_pay_config('pay_time', 2000)
             return True, util.get_json_value(pay_data, ['result', 'orderId'], ''), pay_price
 
     return False, 'No Orders Meet the Filter', 0

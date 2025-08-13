@@ -27,6 +27,7 @@ pause_beep       = True      # 暂停是否调用蜂鸣器
 max_budget       = 10        # 最大预算，单位：CNY，可为小数，下单总金额不会超过该值
 max_order        = 1         # 最大订单数，下单总数不会超过该值
 list_size        = 3         # 获取前多少个订单
+pay_time         = 2000      # 成功购买某一游戏后 pay_time 秒内不再重复下单
 promo_code_id    = ''        # 优惠券id，默认为空
 pay_type         = 'AL'      # 支付方式，只能为AL
 # ==================== 自动支付 ====================
@@ -66,6 +67,7 @@ payConfig = {
     'max_budget':       max_budget,
     'max_order':        max_order,
     'list_size':        list_size,
+    'pay_time':         pay_time,
     'promo_code_id':    promo_code_id,
     'pay_type':         pay_type,
 }
