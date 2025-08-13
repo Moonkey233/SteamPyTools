@@ -7,20 +7,20 @@ page_number     = 1                                             # 从py的第几
 max_page        = 300                                           # 一共抓取py前多少页
 page_size       = 50                                            # 每一页的大小
 loop_sleep_time = 300                                           # 循环检测间隔时间，单位：秒，<=0时只执行一次
-sort_key        = const.sort_key_discount                       # sort_key_discount 折扣(一般用于加库存价值) / sort_key_price 价格(一般用于挂卡控制成本)
+sort_key        = const.sort_key_price                       # sort_key_discount 折扣(一般用于加库存价值) / sort_key_price 价格(一般用于挂卡控制成本)
 # ==================== 基本设置 ====================
 
 
 # ==================== 过滤器 ====================
-max_price       = 20        # 接受的最大CDK价格，实际价格比该数字高则不计入，单位：元，支持小数
-max_discount    = 0.031     # 接受的最高折扣，实际折扣比该数字高则不计入，0.05指 -95% off
-must_have_card  = False     # 是否必须有卡，False则只判断是否已入库、是否资料受限
+max_price       = 1.01        # 接受的最大CDK价格，实际价格比该数字高则不计入，单位：元，支持小数
+max_discount    = 1     # 接受的最高折扣，实际折扣比该数字高则不计入，0.05指 -95% off
+must_have_card  = True     # 是否必须有卡，False则只判断是否已入库、是否资料受限
 must_not_free   = True      # 是否排除免费游戏，False则符合条件的免费游戏也会可购买
 # ==================== 过滤器 ====================
 
 
 # ==================== 自动支付 ====================
-auto_pay         = True      # 是否启用自动支付
+auto_pay         = False      # 是否启用自动支付
 use_balance      = True      # 是否使用余额支付
 confirm_pause    = True      # 是否确认支付暂停
 pause_beep       = True      # 暂停是否调用蜂鸣器
@@ -34,7 +34,7 @@ pay_type         = 'AL'      # 支付方式，只能为AL
 
 
 # ==================== 邮件设置 ====================
-auto_email  = True                          # 是否启用邮件通知，若启用，请配置smtp
+auto_email  = False                          # 是否启用邮件通知，若启用，请配置smtp
 smtp_server = 'smtp.qq.com'                 # smtp服务器
 smtp_port   = 465                           # smtp端口
 smtp_from   = 'moonkey_work@foxmail.com'    # smtp寄件人
