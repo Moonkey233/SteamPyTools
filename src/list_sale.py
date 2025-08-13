@@ -4,7 +4,7 @@ import requests
 from config import configs
 
 
-def get_list_sale(gameID):
+def get_list_sale(game_id):
     """根据gameID获取订单列表"""
     list_sale_query = {
         'pageNumber': 1,
@@ -13,7 +13,7 @@ def get_list_sale(gameID):
         'order': 'asc',
         'startDate': '',
         'endDate': '',
-        'gameId': gameID,
+        'gameId': game_id,
     }
 
     try:

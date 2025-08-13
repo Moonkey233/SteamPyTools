@@ -9,7 +9,7 @@ from email.mime.text import MIMEText
 def get_cache_file_path(must_have_card, must_not_free):
     """根据参数组合生成缓存文件路径"""
     cache_path = os.path.abspath(os.path.join(os.path.dirname(__file__), '../cache/'))
-    return os.path.join(cache_path, f"cache_{must_have_card}_{must_not_free}.json")
+    return os.path.join(cache_path, f'cache_{must_have_card}_{must_not_free}.json')
 
 
 def load_cache(must_have_card, must_not_free):
@@ -20,7 +20,7 @@ def load_cache(must_have_card, must_not_free):
             with open(file_path, 'r', encoding='utf-8') as f:
                 return json.load(f)
         except Exception as err:
-            print(f"[LOAD ERROR] {file_path}: {err}")
+            print(f'[LOAD ERROR] {file_path}: {err}')
             return {}
     return {}
 
@@ -84,9 +84,8 @@ def send_email(title, content, email_addr, smtp_from, smtp_server, smtp_port, sm
 
 def get_json_value(data, path, default=None):
     """从嵌套 JSON 里安全获取值, 找不到时返回的默认值"""
-
     if isinstance(path, str):
-        path = path.strip(".").split(".")
+        path = path.strip('.').split('.')
 
     try:
         for key in path:
