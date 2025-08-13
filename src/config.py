@@ -3,7 +3,7 @@ import const
 
 # ==================== 基本设置 ====================
 verify_url      = 'https://store.steampowered.com/app/504230'   # Celeste蔚蓝，这里选一个Steam库里有的游戏，用于验证Cookie是否过期
-page_number     = 20                                            # 从py的第几页开始抓取
+page_number     = 1                                             # 从py的第几页开始抓取
 max_page        = 50                                            # 一共抓取py前多少页
 page_size       = 50                                            # 每一页的大小
 loop_sleep_time = 2                                             # 循环检测间隔时间，单位：秒，>=0时只执行一次

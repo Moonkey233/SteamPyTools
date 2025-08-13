@@ -109,10 +109,6 @@ if __name__ == '__main__':
         try:
             while max_page != 0:
                 print('\nPAGE NUMBER:', page_number)
-                cnt = 1
-                page_number += 1
-                max_page -= 1
-
                 rank_query = {
                     'pageNumber': page_number,
                     'pageSize': page_size,
@@ -127,12 +123,16 @@ if __name__ == '__main__':
                     params=rank_query,
                     headers=const.py_headers,
                     cookies=const.py_cookies
-                ).json()
+                )
 
-                content = util.get_json_value(py_resp, ['result', 'content'], [])
+                content = util.get_json_value(py_resp.json(), ['result', 'content'], [])
                 if len(content) == 0:
                     print('Py Cookie Expired, Please Login')
                     exit(0)
+
+                cnt = 1
+                page_number += 1
+                max_page -= 1
 
                 for info in content:
                     if pay.total_price >= max_budget or pay.total_order >= max_order:

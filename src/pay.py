@@ -41,7 +41,7 @@ def pay_order(game_id, price, discount, steam_price):
 
         data['saleId'] = util.get_json_value(order, 'saleId', '')
 
-        print(f'Real Price: {key_price}, Real Discount: {real_discount:.2f}')
+        print(f'[Real Price]: {key_price}, [Real Discount]: {real_discount:.2f}')
         if confirm_pause:
             if configs.get_pay_config('pause_beep', False):
                 util.beep()
@@ -63,4 +63,4 @@ def pay_order(game_id, price, discount, steam_price):
             total_order += 1
             return True, util.get_json_value(pay_data, ['result', 'orderId'], ''), pay_price
 
-    return False, 'no orders meet the filter', 0
+    return False, 'No Orders Meet the Filter', 0

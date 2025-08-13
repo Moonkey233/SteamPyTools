@@ -29,14 +29,22 @@ def load_cache(must_have_card, must_not_free):
 def save_cache(cacheInfo, must_have_card, must_not_free):
     """保存指定参数组合的缓存"""
     file_path = get_cache_file_path(must_have_card, must_not_free)
+    dir_path = os.path.dirname(file_path)
+    if not os.path.exists(dir_path):
+        os.makedirs(dir_path)
     with open(file_path, 'w', encoding='utf-8') as f:
         json.dump(cacheInfo, f, ensure_ascii=False, indent=2)
 
 
 def parse_curl_file(file_path):
     """解析curl(bash)文件 为用户 headers & cookies"""
-    with open(file_path, 'r', encoding='utf-8') as f:
-        curl_str = f.read()
+    try:
+        with open(file_path, 'r', encoding='utf-8') as f:
+            curl_str = f.read()
+    except Exception as err:
+        print(err)
+        print('Please make sure you have curl files')
+        exit(0)
 
     parts = shlex.split(curl_str)
 
@@ -111,10 +119,10 @@ def get_json_value(data, path, default=None):
 def print_buy_game(game):
     """格式化输出游戏"""
     print(
-        'Name:', game['name'],
-        'CDK:', game['py_price'],
-        'Steam:', game['steam_price'],
-        'Discount:', game['discount'],
+        '[Name]:', game['name'],
+        '[CDK]:', game['py_price'],
+        '[Steam]:', game['steam_price'],
+        '[Discount]:', game['discount'],
         game['steam'], game['py']
     )
 
