@@ -187,6 +187,8 @@ if __name__ == '__main__':
                                     confirm_pause
                                 )
                                 if success:
+                                    buy_game_info['py_price'] = order_price
+                                    buy_game_info['discount'] = buy_game_info['py_price'] / float(buy_game_info['steam_price'])
                                     buy_list.append(buy_game_info)
                                     print(f'[Success]: {order_price}r')
                                     if configs.get_email_config('auto_email', False):
@@ -212,7 +214,6 @@ if __name__ == '__main__':
 
                             else:
                                 buy_list.append(buy_game_info)
-
 
                     print('=' * 10, f'{cnt}.', py_name, '=' * 10)
                     print()

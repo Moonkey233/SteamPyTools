@@ -122,7 +122,7 @@ def print_buy_game(game):
         '[Name]:',      game['name'],
         '[CDK]:',       game['py_price'],
         '[Steam]:',     game['steam_price'],
-        '[Discount]:',  game['discount'],
+        '[Discount]:',  f'{game['discount']:.4f}',
         game['steam'],  game['py']
     )
 
