@@ -6,14 +6,14 @@ verify_url      = 'https://store.steampowered.com/app/504230'   # Celeste蔚蓝�
 page_number     = 1                                             # 从py的第几页开始抓取
 max_page        = 50                                            # 一共抓取py前多少页
 page_size       = 50                                            # 每一页的大小
-loop_sleep_time = 2                                             # 循环检测间隔时间，单位：秒，>=0时只执行一次
+loop_sleep_time = 300                                           # 循环检测间隔时间，单位：秒，<=0时只执行一次
 sort_key        = const.sort_key_discount                       # sort_key_discount 折扣(一般用于加库存价值) / sort_key_price 价格(一般用于挂卡控制成本)
 # ==================== 基本设置 ====================
 
 
 # ==================== 过滤器 ====================
-max_price       = 10        # 接受的最大CDK价格，实际价格比该数字高则不计入，单位：元，支持小数
-max_discount    = 0.05      # 接受的最高折扣，实际折扣比该数字高则不计入，0.05指 -95% off
+max_price       = 20        # 接受的最大CDK价格，实际价格比该数字高则不计入，单位：元，支持小数
+max_discount    = 0.02      # 接受的最高折扣，实际折扣比该数字高则不计入，0.05指 -95% off
 must_have_card  = False     # 是否必须有卡，False则只判断是否已入库、是否资料受限
 must_not_free   = True      # 是否排除免费游戏，False则符合条件的免费游戏也会可购买
 # ==================== 过滤器 ====================
@@ -24,8 +24,8 @@ auto_pay         = True      # 是否启用自动支付
 use_balance      = True      # 是否使用余额支付
 confirm_pause    = True      # 是否确认支付暂停
 pause_beep       = True      # 暂停是否调用蜂鸣器
-max_budget       = 10        # 最大预算，单位：CNY，可为小数，下单总金额不会超过该值
-max_order        = 5         # 最大订单数，下单总数不会超过该值
+max_budget       = 30        # 最大预算，单位：CNY，可为小数，下单总金额不会超过该值
+max_order        = 10        # 最大订单数，下单总数不会超过该值
 list_size        = 3         # 获取前多少个订单
 pay_time         = 2000      # 成功购买某一游戏后 pay_time 秒内不再重复下单
 promo_code_id    = ''        # 优惠券id，默认为空
