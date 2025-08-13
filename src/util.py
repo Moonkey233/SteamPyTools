@@ -2,6 +2,7 @@ import os
 import json
 import shlex
 import smtplib
+import winsound
 from email.header import Header
 from email.mime.text import MIMEText
 
@@ -105,3 +106,33 @@ def get_json_value(data, path, default=None):
     except Exception as err:
         print(f'[ERROR]:', err)
         return default
+
+
+def print_buy_game(game):
+    """格式化输出游戏"""
+    print(
+        'Name:', game['name'],
+        'CDK:', game['py_price'],
+        'Steam:', game['steam_price'],
+        'Discount:', game['discount'],
+        game['steam'], game['py']
+    )
+
+
+def print_buy_list(game_list):
+    """格式化输出已购买列表"""
+    print()
+    print('=' * 20, 'Buy List', '=' * 20)
+    print(f'Total: {len(game_list)}')
+
+    for game in game_list:
+        print_buy_game(game)
+
+    print('=' * 20, 'Buy List', '=' * 20)
+    print()
+
+
+def beep(frequency=500, duration=500, times=2):
+    """调用蜂鸣器发声"""
+    for i in range(times):
+        winsound.Beep(frequency, duration)

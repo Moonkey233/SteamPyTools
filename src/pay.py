@@ -43,6 +43,8 @@ def pay_order(game_id, price, discount, steam_price):
 
         print(f'Real Price: {key_price}, Real Discount: {real_discount:.2f}')
         if confirm_pause:
+            if configs.get_pay_config('pause_beep', False):
+                util.beep()
             input('Press Enter to Continue: ')
 
         payResp = requests.post(

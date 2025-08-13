@@ -23,6 +23,7 @@ must_not_free   = True      # 是否排除免费游戏，False则符合条件的
 auto_pay         = True      # 是否启用自动支付
 use_balance      = True      # 是否使用余额支付
 confirm_pause    = True      # 是否确认支付暂停
+pause_beep       = True      # 暂停是否调用蜂鸣器
 max_budget       = 10        # 最大预算，单位：CNY，可为小数，下单总金额不会超过该值
 max_order        = 1         # 最大订单数，下单总数不会超过该值
 list_size        = 3         # 获取前多少个订单
@@ -61,6 +62,7 @@ payConfig = {
     'auto_pay':         auto_pay,
     'use_balance':      use_balance,
     'confirm_pause':    confirm_pause,
+    'pause_beep':       pause_beep,
     'max_budget':       max_budget,
     'max_order':        max_order,
     'list_size':        list_size,

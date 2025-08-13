@@ -68,30 +68,6 @@ def get_can_buy_from_steam_with_cache(url, headers, cookies, cacheInfo):
         return False
 
 
-def print_buy_game(game):
-    """格式化输出游戏"""
-    print(
-        'Name:', game['name'],
-        'CDK:', game['py_price'],
-        'Steam:', game['steam_price'],
-        'Discount:', game['discount'],
-        game['steam'], game['py']
-    )
-
-
-def print_buy_list(game_list):
-    """格式化输出已购买列表"""
-    print()
-    print('=' * 20, 'Buy List', '=' * 20)
-    print(f'Total: {len(game_list)}')
-
-    for game in game_list:
-        print_buy_game(game)
-
-    print('=' * 20, 'Buy List', '=' * 20)
-    print()
-
-
 if __name__ == '__main__':
     sort_key = configs.get_base_config('sort_key', '')
     page_size = configs.get_base_config('page_size', 0)
@@ -162,7 +138,7 @@ if __name__ == '__main__':
                     if pay.total_price >= max_budget or pay.total_order >= max_order:
                         print(f'Out of Budget: {pay.total_price}r/{max_budget}r {pay.total_order}/{max_order}')
                         save_cache(cache, must_have_card, must_not_free)
-                        print_buy_list(buy_list)
+                        util.print_buy_list(buy_list)
                         exit(0)
 
                     py_name = util.get_json_value(info, ['gameNameCn'], '')
@@ -183,7 +159,7 @@ if __name__ == '__main__':
                     }
 
                     if get_can_buy_from_steam_with_cache(target_url, const.steam_headers, const.steam_cookies, cache):
-                        print_buy_game(buy_game_info)
+                        util.print_buy_game(buy_game_info)
                         if float(buy_game_info['py_price']) > max_price:
                             print(f'CDK Price {buy_game_info['py_price']} > Max Price {max_price}')
                             if sort_key == const.sort_key_price:
@@ -207,11 +183,12 @@ if __name__ == '__main__':
                                     print(f'Success: {order_price}r')
                                     if configs.get_email_config('auto_email', False):
                                         send_email(
-                                            const.email_title, f'{buy_game_info['name']}' +
+                                            const.email_title,
+                                            f'{buy_game_info['name']}' +
                                             f'\nPrice：{order_price}r' +
                                             f'\nSteam：{buy_game_info['steam_price']}' +
-                                                               f'\nLink：{buy_game_info['steam']}' +
-                                                               const.email_notify,
+                                            f'\nLink：{buy_game_info['steam']}' +
+                                            const.email_notify,
                                             configs.get_email_config('email_addr', []),
                                             configs.get_email_config('smtp_from', ''),
                                             configs.get_email_config('smtp_server', ''),
@@ -221,6 +198,8 @@ if __name__ == '__main__':
                                 else:
                                     print(f'Failed: {msg}')
                                 if confirm_pause:
+                                    if configs.get_pay_config('pause_beep', False):
+                                        util.beep()
                                     input('Press Enter to Continue: ')
 
 
@@ -228,7 +207,7 @@ if __name__ == '__main__':
                     print()
                     cnt += 1
 
-                print_buy_list(buy_list)
+                util.print_buy_list(buy_list)
 
                 if next_loop:
                     break
