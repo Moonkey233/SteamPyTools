@@ -152,7 +152,7 @@ if __name__ == '__main__':
                     buy_game_info = {
                         'name': py_name,
                         'steam': target_url,
-                        'py': 'https://steampy.com/cdkDetail?name=cn&gameId=' + game_id,
+                        'py': const.py_detail_url + game_id,
                         'py_price': util.get_json_value(info, ['keyTxAmt'], ''),
                         'steam_price': util.get_json_value(info, ['oriPrice'], ''),
                         'discount': util.get_json_value(info, ['keyDiscount'], ''),

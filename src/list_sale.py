@@ -8,7 +8,7 @@ def get_list_sale(game_id):
     """根据gameID获取订单列表"""
     list_sale_query = {
         'pageNumber': 1,
-        'pageSize': configs.get_pay_config('list_size', ''),
+        'pageSize': configs.get_pay_config('list_size', 0),
         'sort': 'keyPrice',
         'order': 'asc',
         'startDate': '',

@@ -31,7 +31,7 @@ def pay_order(game_id, price, discount, steam_price):
         data['walletFlag'] = 'useBalance'
 
     for order in list_sale.get_list_sale(game_id):
-        key_price = float(util.get_json_value(order, 'keyPrice'))
+        key_price = float(util.get_json_value(order, 'keyPrice', ''))
         real_discount = key_price / float(steam_price)
 
         if (key_price > price or
@@ -58,9 +58,9 @@ def pay_order(game_id, price, discount, steam_price):
         if (payResp.status_code == 200 and
                 util.get_json_value(pay_data, ['message'], '') == 'success' and
                 util.get_json_value(pay_data, ['success'], False)):
-            pay_price = util.get_json_value(pay_data, ['result', 'payPrice'], '')
-            total_price += float(pay_price)
+            pay_price = float(util.get_json_value(pay_data, ['result', 'payPrice'], ''))
+            total_price += pay_price
             total_order += 1
-            return True, util.get_json_value(pay_data, ['result', 'orderId'], ''), float(pay_price)
+            return True, util.get_json_value(pay_data, ['result', 'orderId'], ''), pay_price
 
     return False, 'no orders meet the filter', 0
