@@ -2,3 +2,4 @@
 curl/
 cache/
 smtp/
+__pycache__/
