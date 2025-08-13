@@ -1,0 +1,16 @@
+curl 'https://store.steampowered.com/app/3282390/2/' \
+  -H 'accept: text/html,application/xhtml+xml,application/xml;q=0.9,image/avif,image/webp,image/apng,*/*;q=0.8,application/signed-exchange;v=b3;q=0.7' \
+  -H 'accept-language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6' \
+  -H 'cache-control: max-age=0' \
+  -b 'browserid=604159344086049418; timezoneOffset=28800,0; steamLoginSecure=76561199062687844%7C%7CeyAidHlwIjogIkpXVCIsICJhbGciOiAiRWREU0EiIH0.eyAiaXNzIjogInI6MDAwNF8yNjczQjQwRF80NDQ4MyIsICJzdWIiOiAiNzY1NjExOTkwNjI2ODc4NDQiLCAiYXVkIjogWyAid2ViOnN0b3JlIiBdLCAiZXhwIjogMTc1NTA4NDAzOCwgIm5iZiI6IDE3NDYzNTYxNDMsICJpYXQiOiAxNzU0OTk2MTQzLCAianRpIjogIjAwMTFfMjZCQzI4MzBfRjgwNTgiLCAib2F0IjogMTc0OTg3Mzk2MywgInJ0X2V4cCI6IDE3NjgxMDE2NzksICJwZXIiOiAwLCAiaXBfc3ViamVjdCI6ICIxMTQuMjQ2LjIwMS4yOCIsICJpcF9jb25maXJtZXIiOiAiMjMuMTU2LjE1My40IiB9.YLCcffud8sIZJpJ9JtCarTCg2srQM_4WN3pYbvyln_fpEOoj9MK619jnZWui1fh-4znZTAl0V8Z9IjCqvz_UAw; steamCountry=CN%7C6506c3fbfbb17976dc9f7e213456b575; sessionid=b3a2c69b3f60e5a52cb17f6a; deep_dive_carousel_focused_app=1971650; deep_dive_carousel_method=cluster_recent; recentapps=%7B%223282390%22%3A1755005869%2C%222001120%22%3A1755005808%2C%22234140%22%3A1754963596%2C%22289320%22%3A1754879678%2C%2221680%22%3A1754837616%2C%2257925%22%3A1754829612%2C%22695290%22%3A1754824615%2C%22235210%22%3A1754824613%2C%223586380%22%3A1754824608%2C%222644700%22%3A1754824604%7D; app_impressions=2995920@1_4_4__129_1|2001120@1_4_4__125|473930@1_4_4__125|728880@1_4_4__139_4|2054970@1_4_4__139_4|582010@1_4_4__139_4|2138330@1_4_4__139_3|381210@1_4_4__139_3|252490@1_4_4__139_3|1159090@1_4_4__43_1|1189100@1_4_4__43_3|3300160@1_4_4__100735|2246340@1_4_4__139_4|1260320@1_4_4__139_4|2344520@1_4_4__139_4|1850570@1_4_4__139_3|292030:378649:378648@1_4_4__139_3|1295660@1_4_4__139_3|1358140@1_4_4__43_3|3141400@1_4_4__40_2|1250410@1_4_4__40_2|1231880@1_4_4__43_3|3527290@1_4_4__40_1|1172620@1_4_4__40_1|3282390@1_4_4__128_2|3545990@1_5_9__414|3350200@1_5_9__414' \
+  -H 'priority: u=0, i' \
+  -H 'referer: https://store.steampowered.com/' \
+  -H 'sec-ch-ua: "Not;A=Brand";v="99", "Microsoft Edge";v="139", "Chromium";v="139"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"' \
+  -H 'sec-fetch-dest: document' \
+  -H 'sec-fetch-mode: navigate' \
+  -H 'sec-fetch-site: same-origin' \
+  -H 'sec-fetch-user: ?1' \
+  -H 'upgrade-insecure-requests: 1' \
+  -H 'user-agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 Edg/139.0.0.0'

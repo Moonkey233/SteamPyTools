@@ -1,0 +1,15 @@
+curl 'https://steampy.com/xboot/steamGame/keyHot?pageNumber=1&pageSize=30&sort=keyDiscount&order=asc&startDate=&endDate=' \
+  -H 'APP_TOKEN;' \
+  -H 'Accept: application/json, text/plain, */*' \
+  -H 'Accept-Language: zh-CN,zh;q=0.9,en;q=0.8,en-GB;q=0.7,en-US;q=0.6' \
+  -H 'Connection: keep-alive' \
+  -b 'loginRead=1; userInfo={%22id%22:%22731689313221218304%22%2C%22createBy%22:null%2C%22createTime%22:%222023-10-31%2016:04:28%22%2C%22updateBy%22:%22Moonkey%22%2C%22updateTime%22:%222025-04-12%2002:03:21%22%2C%22delFlag%22:0%2C%22username%22:%22Moonkey%22%2C%22password%22:null%2C%22nickName%22:%22Moonkey%22%2C%22mobile%22:%2213996837055%22%2C%22email%22:null%2C%22address%22:null%2C%22street%22:null%2C%22sex%22:null%2C%22passStrength%22:%22%E5%BC%BA%22%2C%22avatar%22:%22https://apk.molipy.com/py/2025-04/bd32ee7f4a6442039a8f59b1d4d245ab.jpg%22%2C%22type%22:0%2C%22status%22:0%2C%22description%22:null%2C%22departmentId%22:null%2C%22inviteCode%22:%22sPlvvJ%22%2C%22steamUrl%22:null%2C%22departmentTitle%22:null%2C%22roles%22:[{%22id%22:%22216756225835012097%22%2C%22createBy%22:%22admin%22%2C%22createTime%22:%222019-12-10%2017:24:12%22%2C%22updateBy%22:%22admin%22%2C%22updateTime%22:%222019-12-10%2017:24:21%22%2C%22delFlag%22:0%2C%22name%22:%22ROLE_PYUSER%22%2C%22defaultRole%22:true%2C%22dataType%22:0%2C%22description%22:%22py%E7%94%A8%E6%88%B7%22%2C%22permissions%22:null%2C%22departments%22:null}]%2C%22defaultRole%22:null%2C%22invitees%22:null%2C%22promos%22:0%2C%22cashoutBlack%22:null%2C%22pushCid%22:null%2C%22likeMobile%22:null%2C%22likeUsername%22:null}; bbsToken=732fd23d23bd4210819d27e82959b6e9; QQ=830633434; cdkey-sort-page=0; cdkey-price-sort=0; cdkey-sort=1; SERVERID=d375e98a5e7fdfcfc80cbe00d36970e5|1754825708|1754825689' \
+  -H 'Referer: https://steampy.com/cdKey/cdKey' \
+  -H 'Sec-Fetch-Dest: empty' \
+  -H 'Sec-Fetch-Mode: cors' \
+  -H 'Sec-Fetch-Site: same-origin' \
+  -H 'User-Agent: Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/139.0.0.0 Safari/537.36 Edg/139.0.0.0' \
+  -H 'accessToken: 732fd23d23bd4210819d27e82959b6e9' \
+  -H 'sec-ch-ua: "Not;A=Brand";v="99", "Microsoft Edge";v="139", "Chromium";v="139"' \
+  -H 'sec-ch-ua-mobile: ?0' \
+  -H 'sec-ch-ua-platform: "Windows"'

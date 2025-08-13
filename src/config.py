@@ -1,0 +1,104 @@
+import util
+import const
+
+# ==================== 基本设置 ====================
+verify_url      = 'https://store.steampowered.com/app/504230'   # Celeste蔚蓝，这里选一个Steam库里有的游戏，用于验证Cookie是否过期
+page_number     = 20                                            # 从py的第几页开始抓取
+max_page        = 50                                            # 一共抓取py前多少页
+page_size       = 50                                            # 每一页的大小
+loop_sleep_time = 2                                             # 循环检测间隔时间，单位：秒，>=0时只执行一次
+sort_key        = const.sort_key_discount                       # sort_key_discount 折扣(一般用于加库存价值) / sort_key_price 价格(一般用于挂卡控制成本)
+# ==================== 基本设置 ====================
+
+
+# ==================== 过滤器 ====================
+max_price       = 10        # 接受的最大CDK价格，实际价格比该数字高则不计入，单位：元，支持小数
+max_discount    = 0.05      # 接受的最高折扣，实际折扣比该数字高则不计入，0.05指 -95% off
+must_have_card  = False     # 是否必须有卡，False则只判断是否已入库、是否资料受限
+must_not_free   = True      # 是否排除免费游戏，False则符合条件的免费游戏也会可购买
+# ==================== 过滤器 ====================
+
+
+# ==================== 自动支付 ====================
+auto_pay         = True      # 是否启用自动支付
+use_balance      = True      # 是否使用余额支付
+confirm_pause    = True      # 是否确认支付暂停
+max_budget       = 10        # 最大预算，单位：CNY，可为小数，下单总金额不会超过该值
+max_order        = 1         # 最大订单数，下单总数不会超过该值
+list_size        = 3         # 获取前多少个订单
+promo_code_id    = ''        # 优惠券id，默认为空
+pay_type         = 'AL'      # 支付方式，只能为AL
+# ==================== 自动支付 ====================
+
+
+# ==================== 邮件设置 ====================
+auto_email  = True                          # 是否启用邮件通知，若启用，请配置smtp
+smtp_server = 'smtp.qq.com'                 # smtp服务器
+smtp_port   = 465                           # smtp端口
+smtp_from   = 'moonkey_work@foxmail.com'    # smtp寄件人
+smtp_pwd    = 'mwfwtslavdilbjic'            # smtp授权码
+email_addr  = ['Moonkey233@foxmail.com']    # 收件人列表
+# ==================== 邮件设置 ====================
+
+
+baseConfig = {
+    'verify_url':       verify_url,
+    'page_number':      page_number,
+    'max_page':         max_page,
+    'page_size':        page_size,
+    'loop_sleep_time':  loop_sleep_time,
+    'sort_key':         sort_key,
+}
+
+filterConfig = {
+    'max_price':        max_price,
+    'max_discount':     max_discount,
+    'must_have_card':   must_have_card,
+    'must_not_free':    must_not_free,
+}
+
+payConfig = {
+    'auto_pay':         auto_pay,
+    'use_balance':      use_balance,
+    'confirm_pause':    confirm_pause,
+    'max_budget':       max_budget,
+    'max_order':        max_order,
+    'list_size':        list_size,
+    'promo_code_id':    promo_code_id,
+    'pay_type':         pay_type,
+}
+
+emailConfig = {
+    'auto_email':       auto_email,
+    'smtp_server':      smtp_server,
+    'smtp_port':        smtp_port,
+    'smtp_from':        smtp_from,
+    'smtp_pwd':         smtp_pwd,
+    'email_addr':       email_addr,
+}
+
+class Config:
+    _instance = None
+
+    def __new__(cls):
+        if cls._instance is None:
+            cls._instance = super().__new__(cls)
+            cls._instance.baseConfig = baseConfig
+            cls._instance.filterConfig = filterConfig
+            cls._instance.payConfig = payConfig
+            cls._instance.emailConfig = emailConfig
+        return cls._instance
+
+    def get_base_config(self, key, default=None):
+        return util.get_json_value(self.baseConfig, key, default)
+
+    def get_filter_config(self, key, default=None):
+        return util.get_json_value(self.filterConfig, key, default)
+
+    def get_pay_config(self, key, default=None):
+        return util.get_json_value(self.payConfig, key, default)
+
+    def get_email_config(self, key, default=None):
+        return util.get_json_value(self.emailConfig, key, default)
+
+configs = Config()
