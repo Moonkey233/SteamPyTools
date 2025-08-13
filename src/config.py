@@ -34,8 +34,8 @@ pay_type         = 'AL'      # 支付方式，只能为AL
 
 
 # ==================== 邮件设置 ====================
+auto_email  = True                          # 是否启用邮件通知，若启用，请配置smtp
 email_addr  = ['Moonkey233@foxmail.com']    # 收件人列表
-auto_email  = True                         # 是否启用邮件通知，若启用，请配置smtp
 smtp_server = ''                            # smtp服务器
 smtp_port   = 0                             # smtp端口
 smtp_from   = ''                            # smtp寄件人
@@ -50,12 +50,9 @@ if auto_email:
                 smtp_from   = lines[2]
                 smtp_pwd    = lines[3]
             else:
-                print('Invalid smtp_config.txt')
-                auto_email = False
+                print('Invalid smtp_config.txt, use code config')
     except Exception as err:
-        print('Invalid smtp_config.txt err', err)
-        auto_email = False
-
+        print('Invalid smtp_config.txt, use code config, err:', err)
 # ==================== 邮件设置 ====================
 
 
