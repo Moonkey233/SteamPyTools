@@ -2,15 +2,19 @@ import pay
 import time
 import util
 import const
+import urllib3
 import requests
 from config import configs
 from bs4 import BeautifulSoup
 from util import load_cache, save_cache, send_email
 
 
+urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
+
+
 def get_can_buy_from_steam(url, headers, cookies):
     """爬取steam游戏页面并判定是否可购买"""
-    resp = requests.get(url, headers=headers, cookies=cookies)
+    resp = requests.get(url, headers=headers, cookies=cookies, verify=False)
     data = resp.text
 
     owned = False
@@ -90,8 +94,9 @@ if __name__ == '__main__':
         try:
             expired = requests.get(
                 configs.get_base_config('verify_url', ''),
-                headers=const.steam_headers,
-                cookies=const.steam_cookies
+                headers = const.steam_headers,
+                cookies = const.steam_cookies,
+                verify  = False
             )
 
             if expired is None or expired.text.find(const.steam_text_owned) == -1:
@@ -176,7 +181,8 @@ if __name__ == '__main__':
                                     game_id,
                                     max_price,
                                     max_discount,
-                                    buy_game_info['steam_price']
+                                    buy_game_info['steam_price'],
+                                    confirm_pause
                                 )
                                 if success:
                                     buy_list.append(buy_game_info)

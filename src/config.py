@@ -43,6 +43,9 @@ email_addr  = ['Moonkey233@foxmail.com']    # 收件人列表
 # ==================== 邮件设置 ====================
 
 
+# ======================================== 配置部分END ========================================
+
+
 baseConfig = {
     'verify_url'        : verify_url,
     'page_number'       : page_number,
