@@ -63,6 +63,8 @@ def pay_order(game_id, price, discount, steam_price):
         )
         pay_data = payResp.json()
 
+        print(pay_data)
+
         if (payResp.status_code == 200 and
                 util.get_json_value(pay_data, ['message'], '') == 'success' and
                 util.get_json_value(pay_data, ['success'], False)):

@@ -3,7 +3,7 @@ import const
 
 # ==================== 基本设置 ====================
 verify_url      = 'https://store.steampowered.com/app/504230'   # Celeste蔚蓝，这里选一个Steam库里有的游戏，用于验证Cookie是否过期
-page_number     = 1                                             # 从py的第几页开始抓取
+page_number     = 21                                             # 从py的第几页开始抓取
 max_page        = 50                                            # 一共抓取py前多少页
 page_size       = 50                                            # 每一页的大小
 loop_sleep_time = 2                                             # 循环检测间隔时间，单位：秒，>=0时只执行一次
@@ -25,7 +25,7 @@ use_balance      = True      # 是否使用余额支付
 confirm_pause    = True      # 是否确认支付暂停
 pause_beep       = True      # 暂停是否调用蜂鸣器
 max_budget       = 10        # 最大预算，单位：CNY，可为小数，下单总金额不会超过该值
-max_order        = 1         # 最大订单数，下单总数不会超过该值
+max_order        = 5         # 最大订单数，下单总数不会超过该值
 list_size        = 3         # 获取前多少个订单
 pay_time         = 2000      # 成功购买某一游戏后 pay_time 秒内不再重复下单
 promo_code_id    = ''        # 优惠券id，默认为空
