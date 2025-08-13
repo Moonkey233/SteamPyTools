@@ -20,7 +20,7 @@ must_not_free   = True      # 是否排除免费游戏，False则符合条件的
 
 
 # ==================== 自动支付 ====================
-auto_pay         = False      # 是否启用自动支付
+auto_pay         = True      # 是否启用自动支付
 use_balance      = True      # 是否使用余额支付
 confirm_pause    = True      # 是否确认支付暂停
 pause_beep       = True      # 暂停是否调用蜂鸣器
@@ -34,12 +34,28 @@ pay_type         = 'AL'      # 支付方式，只能为AL
 
 
 # ==================== 邮件设置 ====================
-auto_email  = False                          # 是否启用邮件通知，若启用，请配置smtp
-smtp_server = 'smtp.qq.com'                 # smtp服务器
-smtp_port   = 465                           # smtp端口
-smtp_from   = 'moonkey_work@foxmail.com'    # smtp寄件人
-smtp_pwd    = 'mwfwtslavdilbjic'            # smtp授权码
 email_addr  = ['Moonkey233@foxmail.com']    # 收件人列表
+auto_email  = True                         # 是否启用邮件通知，若启用，请配置smtp
+smtp_server = ''                            # smtp服务器
+smtp_port   = 0                             # smtp端口
+smtp_from   = ''                            # smtp寄件人
+smtp_pwd    = ''                            # smtp授权码
+if auto_email:
+    try:
+        with open(const.smtp_path, 'r', encoding='utf-8') as f:
+            lines = [line.strip() for line in f.readlines()]
+            if len(lines) >= 4:
+                smtp_server = lines[0]
+                smtp_port   = int(lines[1])
+                smtp_from   = lines[2]
+                smtp_pwd    = lines[3]
+            else:
+                print('Invalid smtp_config.txt')
+                auto_email = False
+    except Exception as err:
+        print('Invalid smtp_config.txt err', err)
+        auto_email = False
+
 # ==================== 邮件设置 ====================
 
 
