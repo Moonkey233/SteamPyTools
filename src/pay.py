@@ -47,6 +47,7 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
         for order in order_list:
             key_price = float(util.get_json_value(order, 'keyPrice', ''))
             real_discount = key_price / float(steam_price)
+            print(f'[Real Price]: {key_price}, [Real Discount]: {real_discount:.4f}')
 
             # 绝大多数在此返回
             if key_price > max_price or real_discount > max_discount:
@@ -58,11 +59,11 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
 
             data['saleId'] = util.get_json_value(order, 'saleId', '')
 
-            print(f'[Real Price]: {key_price}, [Real Discount]: {real_discount:.2f}')
             if confirm_pause:
                 if configs.get_pay_config('pause_beep', False):
                     util.beep()
-                input('Press Enter to Continue: ')
+                if input('<<< ----------!!![IMPORTANT]!!!---------- >>> Press Input [N/n] to Cancel: ').lower() == 'n':
+                    return False, 'Canceled by User', 0
 
             pay_resp = requests.post(
                 url     = const.py_pay_order_url,
@@ -85,5 +86,6 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
                 pay_map[game_id] = time.time() + configs.get_pay_config('pay_time', 2000)
 
                 return True, util.get_json_value(pay_data, ['result', 'orderId'], ''), pay_price
+
 
     return False, 'No Orders Meet the Filter', 0

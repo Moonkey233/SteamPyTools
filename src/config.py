@@ -4,7 +4,7 @@ import const
 # ==================== 基本设置 ====================
 verify_url      = 'https://store.steampowered.com/app/504230'   # Celeste蔚蓝，这里选一个Steam库里有的游戏，用于验证Cookie是否过期
 page_number     = 1                                             # 从py的第几页开始抓取
-max_page        = 50                                            # 一共抓取py前多少页
+max_page        = 300                                           # 一共抓取py前多少页
 page_size       = 50                                            # 每一页的大小
 loop_sleep_time = 300                                           # 循环检测间隔时间，单位：秒，<=0时只执行一次
 sort_key        = const.sort_key_discount                       # sort_key_discount 折扣(一般用于加库存价值) / sort_key_price 价格(一般用于挂卡控制成本)
@@ -13,7 +13,7 @@ sort_key        = const.sort_key_discount                       # sort_key_disco
 
 # ==================== 过滤器 ====================
 max_price       = 20        # 接受的最大CDK价格，实际价格比该数字高则不计入，单位：元，支持小数
-max_discount    = 0.02      # 接受的最高折扣，实际折扣比该数字高则不计入，0.05指 -95% off
+max_discount    = 0.031     # 接受的最高折扣，实际折扣比该数字高则不计入，0.05指 -95% off
 must_have_card  = False     # 是否必须有卡，False则只判断是否已入库、是否资料受限
 must_not_free   = True      # 是否排除免费游戏，False则符合条件的免费游戏也会可购买
 # ==================== 过滤器 ====================

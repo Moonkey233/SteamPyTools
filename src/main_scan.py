@@ -26,26 +26,28 @@ def get_can_buy_from_steam(url, headers, cookies):
     soup = BeautifulSoup(data, 'html.parser')
 
     gameName = soup.find(id=const.steam_id_name).get_text(strip=True)
-    print('Steam Game Name:', gameName)
+    print('[Steam Game Name]:', gameName)
 
     if data.find(const.steam_text_owned) != -1:
-        print('Owned')
+        print('>>> Owned <<<')
         owned = True
 
     if data.find(const.steam_text_limited) != -1 or data.find(const.steam_text_learning) != -1:
-        print('Limited')
+        print('>>> Limited <<<')
         limited = True
 
     if data.find(const.steam_text_card) != -1:
-        print('Card')
+        print('>>> Card <<<')
         card = True
+    else:
+        print('>>> No Card <<<')
 
     if data.find(const.steam_text_dlc) != -1 or data.find(const.steam_text_soundtrack) != -1:
-        print('DLC')
+        print('>>> DLC <<<')
         is_dlc = True
 
     if data.find(const.steam_text_play) != -1 and soup.find(class_=const.steam_class_free).get_text(strip=True) == const.steam_text_free:
-        print('Free')
+        print('>>> Free <<<')
         free = True
 
     must_card = configs.get_filter_config('must_have_card', False)
@@ -113,7 +115,7 @@ if __name__ == '__main__':
 
         try:
             while max_page != 0:
-                print('\nPAGE NUMBER:', page_number)
+                print('\n[PAGE NUMBER]:', page_number)
                 rank_query = {
                     'pageNumber': page_number,
                     'pageSize'  : page_size,
@@ -141,7 +143,7 @@ if __name__ == '__main__':
 
                 for info in content:
                     if pay.total_price >= max_budget or pay.total_order >= max_order:
-                        print(f'Out of Budget: {pay.total_price}r/{max_budget}r {pay.total_order}/{max_order}')
+                        print(f'[Out of Budget]: {pay.total_price}r/{max_budget}r {pay.total_order}/{max_order}')
                         save_cache(cache, must_have_card, must_not_free)
                         util.print_buy_list(buy_list)
                         exit(0)
@@ -166,12 +168,12 @@ if __name__ == '__main__':
                     if get_can_buy_from_steam_with_cache(target_url, const.steam_headers, const.steam_cookies, cache):
                         util.print_buy_game(buy_game_info)
                         if float(buy_game_info['py_price']) > max_price:
-                            print(f'CDK Price {buy_game_info['py_price']} > Max Price {max_price}')
+                            print(f'[CDK Price] {buy_game_info['py_price']} > [Max Price] {max_price}')
                             if sort_key == const.sort_key_price:
                                 next_loop = True
                                 break
                         elif float(buy_game_info['discount']) > max_discount:
-                            print(f'CDK Discount {buy_game_info['discount']} > Max Discount {max_discount}')
+                            print(f'[CDK Discount] {buy_game_info['discount']} > [Max Discount] {max_discount}')
                             if sort_key == const.sort_key_discount:
                                 next_loop = True
                                 break
@@ -186,7 +188,7 @@ if __name__ == '__main__':
                                 )
                                 if success:
                                     buy_list.append(buy_game_info)
-                                    print(f'Success: {order_price}r')
+                                    print(f'[Success]: {order_price}r')
                                     if configs.get_email_config('auto_email', False):
                                         send_email(
                                             const.email_title,
@@ -202,11 +204,14 @@ if __name__ == '__main__':
                                             configs.get_email_config('smtp_pwd', '')
                                         )
                                 else:
-                                    print(f'Failed: {msg}')
+                                    print(f'[Failed]: {msg}')
                                 if confirm_pause:
                                     if configs.get_pay_config('pause_beep', False):
                                         util.beep()
-                                    input('Press Enter to Continue: ')
+                                    input('>>> Press Enter to Continue: ')
+
+                            else:
+                                buy_list.append(buy_game_info)
 
 
                     print('=' * 10, f'{cnt}.', py_name, '=' * 10)
