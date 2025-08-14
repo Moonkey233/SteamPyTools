@@ -19,7 +19,7 @@ def listen_game(listen_id, listen_price):
             game_url, steam_price, game_name = py_api.get_info_by_id(listen_id)
 
             if steam_api.is_game_owned(game_url):
-                print(f"[{game_name}] Already Owned, Exit Listening.")
+                print(f'[{game_name}] Already Owned, Exit Listening.')
                 break
 
             ok = False
@@ -66,15 +66,15 @@ def listen_game(listen_id, listen_price):
             if stop_event.is_set():
                 break
 
-            print(f"[{game_name}] Already Purchased, Cooling Down.")
+            print(f'[{game_name}] Already Purchased, Cooling Down.')
             time.sleep(pay_time + 1)
 
         except Exception as e:
-            print(f"[ERROR] {listen_id}: {e}")
+            print(f'[ERROR] {listen_id}: {e}')
             time.sleep(pay_time + 1)
 
 
-if __name__ == "__main__":
+if __name__ == '__main__':
     threads = []
     listen_list = configs.get_listen_config('listen_list', [])
     try:
@@ -96,7 +96,7 @@ if __name__ == "__main__":
             t.join()
 
     except KeyboardInterrupt:
-        print("\n[EXIT] Ctrl+C detected, stopping all threads...")
+        print('\n[EXIT] Ctrl+C detected, stopping all threads...')
         stop_event.set()
         for t in threads:
             t.join()

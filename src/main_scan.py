@@ -25,8 +25,8 @@ def get_can_buy_from_steam(url, headers, cookies):
 
     soup = BeautifulSoup(data, 'html.parser')
 
-    gameName = soup.find(id=const.steam_id_name).get_text(strip=True)
-    print('[Steam Game Name]:', gameName)
+    game_name = soup.find(id=const.steam_id_name).get_text(strip=True)
+    print('[Steam Game Name]:', game_name)
 
     if data.find(const.steam_text_owned) != -1:
         print('>>> Owned <<<')
@@ -56,20 +56,20 @@ def get_can_buy_from_steam(url, headers, cookies):
     return not owned and not limited and not is_dlc and (card or not must_card) and not (free and must_free)
 
 
-def get_can_buy_from_steam_with_cache(url, headers, cookies, cacheInfo):
+def get_can_buy_from_steam_with_cache(url, headers, cookies, cache_info):
     """带多文件缓存的 get_can_buy_from_steam"""
-    if url in cacheInfo:
+    if url in cache_info:
         print(f'[CACHE] {url} -> False')
         return False
 
     try:
         result = get_can_buy_from_steam(url, headers, cookies)
         if result is False:
-            cacheInfo[url] = False
+            cache_info[url] = False
         return result
     except Exception as e:
         if const.steam_err_lock in str(e):
-            cacheInfo[url] = False
+            cache_info[url] = False
         print(f'[ERROR] {url}:', e)
         return False
 

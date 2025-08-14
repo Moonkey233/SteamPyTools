@@ -33,12 +33,12 @@ must_not_free   = True      # 是否排除免费游戏，False则符合条件的
 # ==================== 自动支付 ====================
 auto_pay         = True      # 是否启用自动支付，监听模式始终自动支付
 use_balance      = True      # 是否使用余额支付
-confirm_pause    = True      # 是否确认支付暂停，监听模式不可用
+confirm_pause    = False     # 是否确认支付暂停，监听模式不可用
 pause_beep       = True      # 暂停是否调用蜂鸣器
 max_budget       = 300       # 最大预算，单位：CNY，可为小数，下单总金额不会超过该值
 max_order        = 10        # 最大订单数，下单总数不会超过该值
 list_size        = 2         # 获取前多少个订单
-pay_time         = 2000      # 成功购买某一游戏后 pay_time 秒内不再重复下单
+pay_time         = 2000      # 成功购买某一个游戏后 pay_time 秒内不再重复下单
 promo_code_id    = ''        # 优惠券id，默认为空
 pay_type         = 'AL'      # 支付方式，只能为AL
 # ==================== 自动支付 ====================

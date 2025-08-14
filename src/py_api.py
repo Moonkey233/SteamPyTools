@@ -22,9 +22,9 @@ def load_pay_map():
         try:
             with open(const.pay_map_path, 'r', encoding='utf-8') as f:
                 pay_map = json.load(f)
-            print(f"[CACHE LOADED] {len(pay_map)} entries from {const.pay_map_path}")
+            print(f'[CACHE LOADED] {len(pay_map)} entries from {const.pay_map_path}')
         except Exception as e:
-            print(f"[CACHE LOAD ERROR] {e}")
+            print(f'[CACHE LOAD ERROR] {e}')
             pay_map = {}
     else:
         pay_map = {}
@@ -38,9 +38,9 @@ def save_pay_map():
             os.makedirs(dir_path)
         with open(const.pay_map_path, 'w', encoding='utf-8') as f:
             json.dump(pay_map, f, ensure_ascii=False, indent=2)
-        print(f"[CACHE SAVED] {len(pay_map)} entries to {const.pay_map_path}")
+        print(f'[CACHE SAVED] {len(pay_map)} entries to {const.pay_map_path}')
     except Exception as e:
-        print(f"[CACHE SAVE ERROR] {e}")
+        print(f'[CACHE SAVE ERROR] {e}')
 
 
 load_pay_map()
@@ -92,7 +92,7 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
     with pay_lock:
         # 一个game_id只有一个线程，pay_map读安全，优先用时间筛掉重复支付
         if game_id in pay_map and pay_map[game_id] > time.time():
-            time_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(pay_map[game_id]))
+            time_str = time.strftime('%Y-%m-%d %H:%M:%S', time.localtime(pay_map[game_id]))
             return False, f'Already paid for {game_id}, will not repay until {time_str}', -2
 
         # 预算判定
