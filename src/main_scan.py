@@ -167,7 +167,7 @@ if __name__ == '__main__':
                                     if configs.get_email_config('auto_email', False):
                                         util.send_email(
                                             const.email_title,
-                                            f'{buy_game_info['name']}' +
+                                            f'Name: {buy_game_info['name']}' +
                                             f'\nPrice：{order_price}r' +
                                             f'\nSteam：{buy_game_info['steam_price']}' +
                                             f'\nLink：{buy_game_info['steam']}' +
@@ -180,9 +180,9 @@ if __name__ == '__main__':
                                         )
                                 else:
                                     print(f'[Failed]: {msg}')
+                                if configs.get_pay_config('pause_beep', False):
+                                    util.beep()
                                 if confirm_pause:
-                                    if configs.get_pay_config('pause_beep', False):
-                                        util.beep()
                                     input('>>> Press Enter to Continue: ')
 
                             else:

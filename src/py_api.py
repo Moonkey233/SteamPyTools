@@ -95,7 +95,7 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
             time_str = time.strftime("%Y-%m-%d %H:%M:%S", time.localtime(pay_map[game_id]))
             return False, f'Already paid for {game_id}, will not repay until {time_str}', -2
 
-        # 粗估计，筛掉一部分
+        # 预算判定
         if total_price >= max_budget or total_order >= max_order:
             return False, f'Out of Budget: {total_price}r/{max_budget}r {total_order}/{max_order}', -1
 
@@ -119,9 +119,10 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
 
             data['saleId'] = util.get_json_value(order, 'saleId', '')
 
+            if configs.get_pay_config('pause_beep', False):
+                util.beep()
+
             if confirm_pause:
-                if configs.get_pay_config('pause_beep', False):
-                    util.beep()
                 if input('<<< ----------!!![IMPORTANT]!!!---------- >>> Press Input [N/n] to Cancel: ').lower() == 'n':
                     return False, 'Canceled by User', 0
 
