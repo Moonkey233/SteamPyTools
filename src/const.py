@@ -32,3 +32,4 @@ file_path                       = os.path.abspath(os.path.join(base_dir, '../cur
 steam_headers, steam_cookies    = util.parse_curl_file(file_path)
 cache_path                      = os.path.abspath(os.path.join(base_dir, '../cache/'))
 smtp_path                       = os.path.abspath(os.path.join(base_dir, '../smtp/smtp_config.txt'))
+pay_map_path                    = os.path.abspath(os.path.join(base_dir, '../cache/pay_map.json'))

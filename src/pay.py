@@ -1,6 +1,9 @@
+import json
+import os
 import time
 import util
 import const
+import atexit
 import requests
 import list_sale
 import threading
@@ -11,6 +14,38 @@ total_price = 0
 total_order = 0
 pay_map     = {}
 pay_lock    = threading.Lock()
+
+
+def load_pay_map():
+    """启动时加载缓存"""
+    global pay_map
+    if os.path.exists(const.pay_map_path):
+        try:
+            with open(const.pay_map_path, 'r', encoding='utf-8') as f:
+                pay_map = json.load(f)
+            print(f"[CACHE LOADED] {len(pay_map)} entries from {const.pay_map_path}")
+        except Exception as e:
+            print(f"[CACHE LOAD ERROR] {e}")
+            pay_map = {}
+    else:
+        pay_map = {}
+
+def save_pay_map():
+    """退出时保存缓存"""
+    try:
+        dir_path = os.path.dirname(const.pay_map_path)
+        if not os.path.exists(dir_path):
+            os.makedirs(dir_path)
+        with open(const.pay_map_path, 'w', encoding='utf-8') as f:
+            json.dump(pay_map, f, ensure_ascii=False, indent=2)
+        print(f"[CACHE SAVED] {len(pay_map)} entries to {const.pay_map_path}")
+    except Exception as e:
+        print(f"[CACHE SAVE ERROR] {e}")
+
+
+load_pay_map()
+atexit.register(save_pay_map)
+
 
 def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True):
     """根据游戏id发起最优符合条件的支付请求，不符合条件不支付"""

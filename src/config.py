@@ -1,6 +1,14 @@
 import util
 import const
 
+
+# ==================== 监听设置 ====================
+listen_list = [
+    (768560289619644416, 50), # Resident Evil 4 Gold Edition
+]
+# ==================== 监听设置 ====================
+
+
 # ==================== 基本设置 ====================
 verify_url      = 'https://store.steampowered.com/app/504230'   # Celeste蔚蓝，这里选一个Steam库里有的游戏，用于验证Cookie是否过期
 page_number     = 1                                             # 从py的第几页开始抓取
@@ -22,7 +30,7 @@ must_not_free   = True      # 是否排除免费游戏，False则符合条件的
 # ==================== 自动支付 ====================
 auto_pay         = True      # 是否启用自动支付
 use_balance      = True      # 是否使用余额支付
-confirm_pause    = True      # 是否确认支付暂停
+confirm_pause    = True      # 是否确认支付暂停，监听模式不可用
 pause_beep       = True      # 暂停是否调用蜂鸣器
 max_budget       = 30        # 最大预算，单位：CNY，可为小数，下单总金额不会超过该值
 max_order        = 10        # 最大订单数，下单总数不会超过该值
