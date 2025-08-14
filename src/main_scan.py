@@ -201,6 +201,7 @@ if __name__ == '__main__':
             util.save_cache(cache, must_have_card, must_not_free)
 
         if loop_sleep_time > 0:
+            print(f'loop end, sleep {loop_sleep_time}s')
             time.sleep(loop_sleep_time)
         else:
             break
