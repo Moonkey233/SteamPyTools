@@ -6,7 +6,6 @@ import urllib3
 import requests
 from config import configs
 from bs4 import BeautifulSoup
-from util import load_cache, save_cache, send_email
 
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
@@ -109,7 +108,7 @@ if __name__ == '__main__':
             print('Steam Cookie Expired, Please Login')
             exit(0)
 
-        cache       = load_cache(must_have_card, must_not_free)
+        cache       = util.load_cache(must_have_card, must_not_free)
         page_number = configs.get_base_config('page_number', 1)
         max_page    = configs.get_base_config('max_page', 1)
 
@@ -144,7 +143,7 @@ if __name__ == '__main__':
                 for info in content:
                     if pay.total_price >= max_budget or pay.total_order >= max_order:
                         print(f'[Out of Budget]: {pay.total_price}r/{max_budget}r {pay.total_order}/{max_order}')
-                        save_cache(cache, must_have_card, must_not_free)
+                        util.save_cache(cache, must_have_card, must_not_free)
                         util.print_buy_list(buy_list)
                         exit(0)
 
@@ -192,7 +191,7 @@ if __name__ == '__main__':
                                     buy_list.append(buy_game_info)
                                     print(f'[Success]: {order_price}r')
                                     if configs.get_email_config('auto_email', False):
-                                        send_email(
+                                        util.send_email(
                                             const.email_title,
                                             f'{buy_game_info['name']}' +
                                             f'\nPrice：{order_price}r' +
@@ -225,7 +224,7 @@ if __name__ == '__main__':
                     break
 
         finally:
-            save_cache(cache, must_have_card, must_not_free)
+            util.save_cache(cache, must_have_card, must_not_free)
 
         if loop_sleep_time > 0:
             time.sleep(loop_sleep_time)
