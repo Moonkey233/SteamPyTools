@@ -110,6 +110,8 @@ def get_json_value(data, path, default=None):
                 return default
             if data is default:
                 return default
+        if data is None:
+            return default
         return data
     except Exception as err:
         print(f'[ERROR]:', err)
