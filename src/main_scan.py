@@ -1,8 +1,9 @@
-import pay
 import time
 import util
 import const
+import py_api
 import urllib3
+import steam_api
 import requests
 from config import configs
 from bs4 import BeautifulSoup
@@ -92,19 +93,7 @@ if __name__ == '__main__':
     while True:
         next_loop = False
 
-        try:
-            expired = requests.get(
-                configs.get_base_config('verify_url', ''),
-                headers = const.steam_headers,
-                cookies = const.steam_cookies,
-                verify  = False
-            )
-
-            if expired is None or expired.text.find(const.steam_text_owned) == -1:
-                print('Steam Cookie Expired, Please Login')
-                exit(0)
-        except Exception as err:
-            print(f'[ERROR]: {err}')
+        if not steam_api.is_game_owned(configs.get_base_config('verify_url', ''),):
             print('Steam Cookie Expired, Please Login')
             exit(0)
 
@@ -115,23 +104,8 @@ if __name__ == '__main__':
         try:
             while max_page != 0:
                 print('\n[PAGE NUMBER]:', page_number)
-                rank_query = {
-                    'pageNumber': page_number,
-                    'pageSize'  : page_size,
-                    'sort'      : sort_key,
-                    'order'     : 'asc',
-                    'startDate' : '',
-                    'endDate'   : '',
-                }
 
-                py_resp = requests.get(
-                    url     = const.py_rank_url,
-                    params  = rank_query,
-                    headers = const.py_headers,
-                    cookies = const.py_cookies
-                )
-
-                content = util.get_json_value(py_resp.json(), ['result', 'content'], [])
+                content = py_api.get_rank_list(page_number, page_size, sort_key)
                 if len(content) == 0:
                     print('Py Cookie Expired, Please Login')
                     exit(0)
@@ -141,8 +115,8 @@ if __name__ == '__main__':
                 max_page -= 1
 
                 for info in content:
-                    if pay.total_price >= max_budget or pay.total_order >= max_order:
-                        print(f'[Out of Budget]: {pay.total_price}r/{max_budget}r {pay.total_order}/{max_order}')
+                    if py_api.total_price >= max_budget or py_api.total_order >= max_order:
+                        print(f'[Out of Budget]: {py_api.total_price}r/{max_budget}r {py_api.total_order}/{max_order}')
                         util.save_cache(cache, must_have_card, must_not_free)
                         util.print_buy_list(buy_list)
                         exit(0)
@@ -178,7 +152,7 @@ if __name__ == '__main__':
                                 break
                         else:
                             if configs.get_pay_config('auto_pay', False):
-                                success, msg, order_price = pay.pay_order(
+                                success, msg, order_price = py_api.pay_order(
                                     game_id,
                                     max_price,
                                     max_discount,

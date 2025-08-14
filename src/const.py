@@ -24,6 +24,7 @@ py_rank_url         = 'https://steampy.com/xboot/steamGame/keyHot'
 py_list_sale_url    = 'https://steampy.com/xboot/steamKeySale/listSale'
 py_pay_order_url    = 'https://steampy.com/xboot/steamKeyOrder/payOrder'
 py_detail_url       = 'https://steampy.com/cdkDetail?name=cn&gameId='
+py_get_one_url      = 'https://steampy.com/xboot/steamGame/getOne'
 
 base_dir                        = os.path.dirname(__file__)
 file_path                       = os.path.abspath(os.path.join(base_dir, '../curl/py.curl'))

@@ -5,14 +5,13 @@ import util
 import const
 import atexit
 import requests
-import list_sale
 import threading
 from config import configs
 
 
+pay_map     = {}
 total_price = 0
 total_order = 0
-pay_map     = {}
 pay_lock    = threading.Lock()
 
 
@@ -29,6 +28,7 @@ def load_pay_map():
             pay_map = {}
     else:
         pay_map = {}
+
 
 def save_pay_map():
     """退出时保存缓存"""
@@ -47,15 +47,40 @@ load_pay_map()
 atexit.register(save_pay_map)
 
 
+def get_list_sale(game_id):
+    """根据gameID获取订单列表"""
+    list_sale_query = {
+        'pageNumber': 1,
+        'pageSize'  : configs.get_pay_config('list_size', 0),
+        'sort'      : 'keyPrice',
+        'order'     : 'asc',
+        'startDate' : '',
+        'endDate'   : '',
+        'gameId'    : game_id,
+    }
+
+    try:
+        resp = requests.get(
+            url     = const.py_list_sale_url,
+            params  = list_sale_query,
+            headers = const.py_headers,
+            cookies = const.py_cookies
+        ).json()
+        return util.get_json_value(resp, ['result', 'content'], [])
+    except Exception as err:
+        print(f'[ERROR]: {err}')
+        return []
+
+
 def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True):
     """根据游戏id发起最优符合条件的支付请求，不符合条件不支付"""
     global total_price, total_order, pay_map
 
-    max_budget = configs.get_pay_config('max_budget', 0)
-    max_order = configs.get_pay_config('max_order', 0)
-    pay_type = configs.get_pay_config('pay_type', 'AL')
-    promo_code_id = configs.get_pay_config('promo_code_id', '')
-    use_balance = configs.get_pay_config('use_balance', False)
+    max_budget      = configs.get_pay_config('max_budget', 0)
+    max_order       = configs.get_pay_config('max_order', 0)
+    pay_type        = configs.get_pay_config('pay_type', 'AL')
+    promo_code_id   = configs.get_pay_config('promo_code_id', '')
+    use_balance     = configs.get_pay_config('use_balance', False)
     data = {
         'payType': pay_type,
         'promoCodeId': promo_code_id,
@@ -75,7 +100,7 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
             return False, f'Out of Budget: {total_price}r/{max_budget}r {total_order}/{max_order}', -1
 
     # 最耗时的一步，不加锁
-    order_list = list_sale.get_list_sale(game_id)
+    order_list = get_list_sale(game_id)
 
     # 加锁操作，较少订单会进入post，post调用较少，因此post一起锁住保证一致性
     with pay_lock:
@@ -124,3 +149,56 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
 
 
     return False, 'No Orders Meet the Filter', 0
+
+
+def get_rank_list(page_number=1, page_size=30, sort_key=const.sort_key_discount):
+    """获取排行榜单"""
+    try:
+        rank_query = {
+            'pageNumber': page_number,
+            'pageSize'  : page_size,
+            'sort'      : sort_key,
+            'order'     : 'asc',
+            'startDate' : '',
+            'endDate'   : '',
+        }
+
+        py_resp = requests.get(
+            url     = const.py_rank_url,
+            params  = rank_query,
+            headers = const.py_headers,
+            cookies = const.py_cookies
+        ).json()
+
+        content = util.get_json_value(py_resp, ['result', 'content'], [])
+        if content is None or len(content) == 0:
+            return []
+        return content
+    except Exception as err:
+        print(f'[ERROR]: {err}')
+        return []
+
+
+def get_info_by_id(game_id):
+    """根据py game_id 获取 Steam 链接和原价"""
+    try:
+        get_one_query = {
+            'gameId': game_id,
+        }
+
+        py_resp = requests.get(
+            url     = const.py_get_one_url,
+            params  = get_one_query,
+            headers = const.py_headers,
+            cookies = const.py_cookies
+        ).json()
+
+        gama_url    = util.get_json_value(py_resp, ['result', 'gameUrl'], '')
+        steam_price = util.get_json_value(py_resp, ['result', 'oriPrice'], 999)
+        py_name     = util.get_json_value(py_resp, ['result', 'gameNameCn'], '')
+        if py_name == '' or py_name is None:
+            py_name = util.get_json_value(py_resp, ['result', 'gameName'], '')
+        return gama_url, steam_price, py_name
+    except Exception as err:
+        print(f'[ERROR]: {err}')
+        return '', 999, ''
