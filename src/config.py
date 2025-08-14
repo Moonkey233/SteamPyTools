@@ -2,13 +2,6 @@ import util
 import const
 
 
-# ==================== 监听设置 ====================
-listen_list = [
-    (768560289619644416, 50), # Resident Evil 4 Gold Edition
-]
-# ==================== 监听设置 ====================
-
-
 # ==================== 基本设置 ====================
 verify_url      = 'https://store.steampowered.com/app/504230'   # Celeste蔚蓝，这里选一个Steam库里有的游戏，用于验证Cookie是否过期
 page_number     = 1                                             # 从py的第几页开始抓取
@@ -17,6 +10,13 @@ page_size       = 50                                            # 每一页的�
 loop_sleep_time = 600                                           # 循环检测间隔时间，单位：秒，<=0时只执行一次
 sort_key        = const.sort_key_discount                       # sort_key_discount 折扣(一般用于加库存价值) / sort_key_price 价格(一般用于挂卡控制成本)
 # ==================== 基本设置 ====================
+
+
+# ==================== 监听设置 ====================
+listen_list = [
+    (768560289619644416, 50), # Resident Evil 4 Gold Edition
+]
+# ==================== 监听设置 ====================
 
 
 # ==================== 过滤器 ====================
@@ -67,7 +67,7 @@ if auto_email:
 # ======================================== 配置部分END ========================================
 
 
-baseConfig = {
+base_config = {
     'verify_url'        : verify_url,
     'page_number'       : page_number,
     'max_page'          : max_page,
@@ -76,14 +76,18 @@ baseConfig = {
     'sort_key'          : sort_key,
 }
 
-filterConfig = {
+listen_config = {
+    'listen_list'   : listen_list,
+}
+
+filter_config = {
     'max_price'     : max_price,
     'max_discount'  : max_discount,
     'must_have_card': must_have_card,
     'must_not_free' : must_not_free,
 }
 
-payConfig = {
+pay_config = {
     'auto_pay'      : auto_pay,
     'use_balance'   : use_balance,
     'confirm_pause' : confirm_pause,
@@ -96,7 +100,7 @@ payConfig = {
     'pay_type'      : pay_type,
 }
 
-emailConfig = {
+email_config = {
     'auto_email'    : auto_email,
     'smtp_server'   : smtp_server,
     'smtp_port'     : smtp_port,
@@ -111,22 +115,26 @@ class Config:
     def __new__(cls):
         if cls._instance is None:
             cls._instance = super().__new__(cls)
-            cls._instance.baseConfig = baseConfig
-            cls._instance.filterConfig = filterConfig
-            cls._instance.payConfig = payConfig
-            cls._instance.emailConfig = emailConfig
+            cls._instance.base_config = base_config
+            cls._instance.listen_config = listen_config
+            cls._instance.filter_config = filter_config
+            cls._instance.pay_config = pay_config
+            cls._instance.email_config = email_config
         return cls._instance
 
     def get_base_config(self, key, default=None):
-        return util.get_json_value(self.baseConfig, key, default)
+        return util.get_json_value(self.base_config, key, default)
+
+    def get_listen_config(self, key, default=None):
+        return util.get_json_value(self.listen_config, key, default)
 
     def get_filter_config(self, key, default=None):
-        return util.get_json_value(self.filterConfig, key, default)
+        return util.get_json_value(self.filter_config, key, default)
 
     def get_pay_config(self, key, default=None):
-        return util.get_json_value(self.payConfig, key, default)
+        return util.get_json_value(self.pay_config, key, default)
 
     def get_email_config(self, key, default=None):
-        return util.get_json_value(self.emailConfig, key, default)
+        return util.get_json_value(self.email_config, key, default)
 
 configs = Config()
