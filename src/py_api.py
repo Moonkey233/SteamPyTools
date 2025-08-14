@@ -107,7 +107,7 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
         for order in order_list:
             key_price = float(util.get_json_value(order, 'keyPrice', '999'))
             real_discount = key_price / float(steam_price)
-            print(f'\n[Real Price]: {key_price}, [Real Discount]: {real_discount:.4f}')
+            print(f'\n[Game ID]: {game_id} [Real Price]: {key_price} [Real Discount]: {real_discount:.4f}')
 
             # 绝大多数在此返回
             if key_price > max_price or real_discount > max_discount:

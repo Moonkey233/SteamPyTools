@@ -75,24 +75,31 @@ def listen_game(listen_id, listen_price):
 
 
 if __name__ == "__main__":
-    if not steam_api.is_game_owned(configs.get_base_config('verify_url', ''), ):
-        print('Steam Cookie Expired, Please Login')
-        exit(0)
-
-    content = py_api.get_rank_list(1, 1, const.sort_key_discount)
-    if len(content) == 0:
-        print('Py Cookie Expired, Please Login')
-        exit(0)
-
     threads = []
     listen_list = configs.get_listen_config('listen_list', [])
+    try:
+        if not steam_api.is_game_owned(configs.get_base_config('verify_url', ''), ):
+            print('Steam Cookie Expired, Please Login')
+            exit(0)
 
-    for game_id, max_price in listen_list:
-        t = threading.Thread(target=listen_game, args=(game_id, max_price), daemon=True)
-        t.start()
-        threads.append(t)
+        content = py_api.get_rank_list(1, 1, const.sort_key_discount)
+        if len(content) == 0:
+            print('Py Cookie Expired, Please Login')
+            exit(0)
 
-    for t in threads:
-        t.join()
+        for game_id, max_price in listen_list:
+            t = threading.Thread(target=listen_game, args=(game_id, max_price))
+            t.start()
+            threads.append(t)
 
-    input('[LISTEN] End Listening, Press Enter to Exit.')
+        for t in threads:
+            t.join()
+
+    except KeyboardInterrupt:
+        print("\n[EXIT] Ctrl+C detected, stopping all threads...")
+        stop_event.set()
+        for t in threads:
+            t.join()
+    finally:
+        py_api.save_pay_map()
+        input('[LISTEN] End Listening, Press Enter to Exit.')
