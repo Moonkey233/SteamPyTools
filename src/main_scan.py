@@ -160,9 +160,9 @@ if __name__ == '__main__':
                         'name'          : py_name,
                         'steam'         : target_url,
                         'py'            : const.py_detail_url + game_id,
-                        'py_price'      : util.get_json_value(info, ['keyTxAmt'], ''),
-                        'steam_price'   : util.get_json_value(info, ['oriPrice'], ''),
-                        'discount'      : util.get_json_value(info, ['keyDiscount'], ''),
+                        'py_price'      : util.get_json_value(info, ['keyTxAmt'], '999'),
+                        'steam_price'   : util.get_json_value(info, ['oriPrice'], '999'),
+                        'discount'      : util.get_json_value(info, ['keyDiscount'], '1'),
                     }
 
                     if get_can_buy_from_steam_with_cache(target_url, const.steam_headers, const.steam_cookies, cache):

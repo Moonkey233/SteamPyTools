@@ -45,7 +45,7 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
     # 加锁操作，较少订单会进入post，post调用较少，因此post一起锁住保证一致性
     with pay_lock:
         for order in order_list:
-            key_price = float(util.get_json_value(order, 'keyPrice', ''))
+            key_price = float(util.get_json_value(order, 'keyPrice', '999'))
             real_discount = key_price / float(steam_price)
             print(f'\n[Real Price]: {key_price}, [Real Discount]: {real_discount:.4f}')
 
@@ -78,7 +78,7 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
             if (pay_resp.status_code == 200 and
                     util.get_json_value(pay_data, ['message'], '') == 'success' and
                     util.get_json_value(pay_data, ['success'], False)):
-                pay_price = float(util.get_json_value(pay_data, ['result', 'payPrice'], ''))
+                pay_price = float(util.get_json_value(pay_data, ['result', 'payPrice'], '999'))
 
                 # 写入预算
                 total_price += key_price
