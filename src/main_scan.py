@@ -140,17 +140,17 @@ if __name__ == '__main__':
 
                     if get_can_buy_from_steam_with_cache(target_url, const.steam_headers, const.steam_cookies, cache):
                         util.print_buy_game(buy_game_info)
-                        # if float(buy_game_info['py_price']) > max_price:
-                        #     print(f'[CDK Price] {buy_game_info['py_price']} > [Max Price] {max_price}')
-                        #     if sort_key == const.sort_key_price:
-                        #         next_loop = True
-                        #         break
-                        # elif float(buy_game_info['discount']) > max_discount:
-                        #     print(f'[CDK Discount] {buy_game_info['discount']} > [Max Discount] {max_discount}')
-                        #     if sort_key == const.sort_key_discount:
-                        #         next_loop = True
-                        #         break
-                        # else:
+                        if float(buy_game_info['py_price']) > max_price:
+                            print(f'[CDK Price] {buy_game_info['py_price']} > [Max Price] {max_price}')
+                            if sort_key == const.sort_key_price:
+                                next_loop = True
+                                break
+                        elif float(buy_game_info['discount']) > max_discount:
+                            print(f'[CDK Discount] {buy_game_info['discount']} > [Max Discount] {max_discount}')
+                            if sort_key == const.sort_key_discount:
+                                next_loop = True
+                                break
+
                         if configs.get_pay_config('auto_pay', False):
                             success, msg, order_price = py_api.pay_order(
                                 game_id,
