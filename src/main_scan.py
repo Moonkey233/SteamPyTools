@@ -140,53 +140,55 @@ if __name__ == '__main__':
 
                     if get_can_buy_from_steam_with_cache(target_url, const.steam_headers, const.steam_cookies, cache):
                         util.print_buy_game(buy_game_info)
-                        if float(buy_game_info['py_price']) > max_price:
-                            print(f'[CDK Price] {buy_game_info['py_price']} > [Max Price] {max_price}')
-                            if sort_key == const.sort_key_price:
-                                next_loop = True
-                                break
-                        elif float(buy_game_info['discount']) > max_discount:
-                            print(f'[CDK Discount] {buy_game_info['discount']} > [Max Discount] {max_discount}')
-                            if sort_key == const.sort_key_discount:
-                                next_loop = True
-                                break
-                        else:
-                            if configs.get_pay_config('auto_pay', False):
-                                success, msg, order_price = py_api.pay_order(
-                                    game_id,
-                                    max_price,
-                                    max_discount,
-                                    buy_game_info['steam_price'],
-                                    confirm_pause
-                                )
-                                if success:
-                                    buy_game_info['py_price'] = order_price
-                                    buy_game_info['discount'] = buy_game_info['py_price'] / float(buy_game_info['steam_price'])
-                                    buy_list.append(buy_game_info)
-                                    print(f'[Success]: {order_price}r')
-                                    if configs.get_email_config('auto_email', False):
-                                        util.send_email(
-                                            const.email_title,
-                                            f'Name: {buy_game_info['name']}' +
-                                            f'\nPrice：{order_price}r' +
-                                            f'\nSteam：{buy_game_info['steam_price']}' +
-                                            f'\nLink：{buy_game_info['steam']}' +
-                                            const.email_notify,
-                                            configs.get_email_config('email_addr', []),
-                                            configs.get_email_config('smtp_from', ''),
-                                            configs.get_email_config('smtp_server', ''),
-                                            configs.get_email_config('smtp_port', 0),
-                                            configs.get_email_config('smtp_pwd', '')
-                                        )
-                                else:
-                                    print(f'[Failed]: {msg}')
+                        # if float(buy_game_info['py_price']) > max_price:
+                        #     print(f'[CDK Price] {buy_game_info['py_price']} > [Max Price] {max_price}')
+                        #     if sort_key == const.sort_key_price:
+                        #         next_loop = True
+                        #         break
+                        # elif float(buy_game_info['discount']) > max_discount:
+                        #     print(f'[CDK Discount] {buy_game_info['discount']} > [Max Discount] {max_discount}')
+                        #     if sort_key == const.sort_key_discount:
+                        #         next_loop = True
+                        #         break
+                        # else:
+                        if configs.get_pay_config('auto_pay', False):
+                            success, msg, order_price = py_api.pay_order(
+                                game_id,
+                                max_price,
+                                max_discount,
+                                buy_game_info['steam_price'],
+                                confirm_pause
+                            )
+                            if success:
+                                buy_game_info['py_price'] = order_price
+                                buy_game_info['discount'] = buy_game_info['py_price'] / float(buy_game_info['steam_price'])
+                                buy_list.append(buy_game_info)
+                                print(f'[Success]: {order_price}r')
+                                if configs.get_email_config('auto_email', False):
+                                    util.send_email(
+                                        const.email_title,
+                                        f'Name: {buy_game_info['name']}' +
+                                        f'\nPrice：{order_price}r' +
+                                        f'\nSteam：{buy_game_info['steam_price']}' +
+                                        f'\nLink：{buy_game_info['steam']}' +
+                                        const.email_notify,
+                                        configs.get_email_config('email_addr', []),
+                                        configs.get_email_config('smtp_from', ''),
+                                        configs.get_email_config('smtp_server', ''),
+                                        configs.get_email_config('smtp_port', 0),
+                                        configs.get_email_config('smtp_pwd', '')
+                                    )
+                            else:
+                                print(f'[Failed]: {msg}')
+
+                            if success or order_price > 0:
                                 if configs.get_pay_config('pause_beep', False):
                                     util.beep()
                                 if confirm_pause:
                                     input('>>> Press Enter to Continue: ')
 
-                            else:
-                                buy_list.append(buy_game_info)
+                        else:
+                            buy_list.append(buy_game_info)
 
                     print('=' * 10, f'{cnt}.', py_name, '=' * 10)
                     print()

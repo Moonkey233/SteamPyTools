@@ -109,22 +109,18 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
             real_discount = key_price / float(steam_price)
             print(f'\n[Game ID]: {game_id} [Real Price]: {key_price} [Real Discount]: {real_discount:.4f}')
 
-            # 绝大多数在此返回
-            if key_price > max_price or real_discount > max_discount:
-                break
-
-            # 再次精确判定预算
-            if total_price + key_price > max_budget:
-                break
-
-            data['saleId'] = util.get_json_value(order, 'saleId', '')
+            # 绝大多数在此返回，再次精确判定预算
+            if key_price > max_price or real_discount > max_discount or total_price + key_price > max_budget:
+                return False, 'No Orders Meet the Filter', 0
 
             if configs.get_pay_config('pause_beep', False):
                 util.beep()
 
             if confirm_pause:
                 if input('<<< ----------!!![IMPORTANT]!!!---------- >>> Press Input [N/n] to Cancel: ').lower() == 'n':
-                    return False, 'Canceled by User', 0
+                    return False, 'Canceled by User', 1
+
+            data['saleId'] = util.get_json_value(order, 'saleId', '')
 
             pay_resp = requests.post(
                 url     = const.py_pay_order_url,
@@ -149,7 +145,7 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
                 return True, util.get_json_value(pay_data, ['result', 'orderId'], ''), pay_price
 
 
-    return False, 'No Orders Meet the Filter', 0
+    return False, 'No Orders Meet the Filter', 2
 
 
 def get_rank_list(page_number=1, page_size=30, sort_key=const.sort_key_discount):
