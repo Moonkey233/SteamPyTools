@@ -36,7 +36,7 @@ use_balance      = True      # 是否使用余额支付
 confirm_pause    = True      # 是否确认支付暂停，监听模式不可用
 pause_beep       = True      # 暂停是否调用蜂鸣器
 max_budget       = 300       # 最大预算，单位：CNY，可为小数，下单总金额不会超过该值
-max_order        = 10        # 最大订单数，下单总数不会超过该值
+max_order        = 100       # 最大订单数，下单总数不会超过该值
 list_size        = 2         # 获取前多少个订单
 pay_time         = 2000      # 成功购买某一个游戏后 pay_time 秒内不再重复下单
 promo_code_id    = ''        # 优惠券id，默认为空
@@ -45,7 +45,7 @@ pay_type         = 'AL'      # 支付方式，只能为AL
 
 
 # ==================== 邮件设置 ====================
-auto_email  = True                          # 是否启用邮件通知，若启用，请配置smtp
+auto_email  = False                         # 是否启用邮件通知，若启用，请配置smtp
 email_addr  = ['Moonkey233@foxmail.com']    # 收件人列表
 smtp_server = ''                            # smtp服务器
 smtp_port   = 0                             # smtp端口
