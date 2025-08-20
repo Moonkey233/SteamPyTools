@@ -79,10 +79,12 @@ if __name__ == '__main__':
     page_size       = configs.get_base_config('page_size', 0)
     loop_sleep_time = configs.get_base_config('loop_sleep_time', 0)
 
-    max_price       = configs.get_filter_config('max_price', 0)
-    max_discount    = configs.get_filter_config('max_discount', 0)
-    must_have_card  = configs.get_filter_config('must_have_card', False)
-    must_not_free   = configs.get_filter_config('must_not_free', False)
+    max_price_display       = configs.get_filter_config('max_price_display', 0)
+    max_price_real          = configs.get_filter_config('max_price_real', 0)
+    max_discount_display    = configs.get_filter_config('max_discount_display', 0)
+    max_discount_real       = configs.get_filter_config('max_discount_real', 0)
+    must_have_card          = configs.get_filter_config('must_have_card', False)
+    must_not_free           = configs.get_filter_config('must_not_free', False)
 
     max_budget      = configs.get_pay_config('max_budget', 0)
     max_order       = configs.get_pay_config('max_order', 0)
@@ -140,13 +142,13 @@ if __name__ == '__main__':
 
                     if get_can_buy_from_steam_with_cache(target_url, const.steam_headers, const.steam_cookies, cache):
                         util.print_buy_game(buy_game_info)
-                        if float(buy_game_info['py_price']) > max_price:
-                            print(f'[CDK Price] {buy_game_info['py_price']} > [Max Price] {max_price}')
+                        if float(buy_game_info['py_price']) > max_price_display:
+                            print(f'[CDK Price] {buy_game_info['py_price']} > [Max Price] {max_price_display}')
                             if sort_key == const.sort_key_price:
                                 next_loop = True
                                 break
-                        elif float(buy_game_info['discount']) > max_discount:
-                            print(f'[CDK Discount] {buy_game_info['discount']} > [Max Discount] {max_discount}')
+                        elif float(buy_game_info['discount']) > max_discount_display:
+                            print(f'[CDK Discount] {buy_game_info['discount']} > [Max Discount] {max_discount_display}')
                             if sort_key == const.sort_key_discount:
                                 next_loop = True
                                 break
@@ -154,8 +156,8 @@ if __name__ == '__main__':
                         if configs.get_pay_config('auto_pay', False):
                             success, msg, order_price = py_api.pay_order(
                                 game_id,
-                                max_price,
-                                max_discount,
+                                max_price_real,
+                                max_discount_real,
                                 buy_game_info['steam_price'],
                                 confirm_pause
                             )

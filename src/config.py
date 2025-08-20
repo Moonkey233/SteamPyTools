@@ -23,10 +23,12 @@ listen_list = [
 
 
 # ==================== 扫描模式过滤器 ====================
-max_price       = 10        # 接受的最大CDK价格，实际价格比该数字高则不计入，单位：元，支持小数，仅扫描模式
-max_discount    = 0.031     # 接受的最高折扣，实际折扣比该数字高则不计入，0.05指 -95% off，仅扫描模式
-must_have_card  = False     # 是否必须有卡，False则只判断是否已入库、是否资料受限，仅扫描模式
-must_not_free   = True      # 是否排除免费游戏，False则符合条件的免费游戏也会可购买，仅扫描模式
+max_price_display       = 20        # py榜单展示最大CDK价格，一般应大于等于实际价格，仅检测用，实际购买以实际价格为准，仅扫描模式
+max_price_real          = 10        # 接受的最大CDK价格，实际价格比该数字高则不计入，单位：元，支持小数，仅扫描模式
+max_discount_display    = 0.031     # py榜单展示的最高折扣，一般应大于等于实际折扣，仅检测用，实际购买以实际折扣为准，仅扫描模式
+max_discount_real       = 0.025     # 接受的最高折扣，实际折扣比该数字高则不计入，0.05指 -95% off，仅扫描模式
+must_have_card          = False     # 是否必须有卡，False则只判断是否已入库、是否资料受限，仅扫描模式
+must_not_free           = True      # 是否排除免费游戏，False则符合条件的免费游戏也会可购买，仅扫描模式
 # ==================== 扫描模式过滤器 ====================
 
 
@@ -84,10 +86,12 @@ listen_config = {
 }
 
 filter_config = {
-    'max_price'     : max_price,
-    'max_discount'  : max_discount,
-    'must_have_card': must_have_card,
-    'must_not_free' : must_not_free,
+    'max_price_display'     : max_price_display,
+    'max_price_real'        : max_price_real,
+    'max_discount_display'  : max_discount_display,
+    'max_discount_real'     : max_discount_real,
+    'must_have_card'        : must_have_card,
+    'must_not_free'         : must_not_free,
 }
 
 pay_config = {
