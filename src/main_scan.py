@@ -94,17 +94,16 @@ if __name__ == '__main__':
 
     while True:
         next_loop = False
-
-        if not steam_api.is_game_owned(configs.get_base_config('verify_url', ''),):
-            print('Steam Cookie Expired, Please Login')
-            exit(0)
-
         cache       = util.load_cache(must_have_card, must_not_free)
         page_number = configs.get_base_config('page_number', 1)
         max_page    = configs.get_base_config('max_page', 1)
 
         try:
             while max_page != 0:
+                if not steam_api.is_game_owned(configs.get_base_config('verify_url', ''), ):
+                    print('Steam Cookie Expired, Please Login')
+                    exit(0)
+
                 print('\n[PAGE NUMBER]:', page_number)
 
                 content = py_api.get_rank_list(page_number, page_size, sort_key)
