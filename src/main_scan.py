@@ -100,11 +100,11 @@ if __name__ == '__main__':
 
         try:
             while max_page != 0:
+                print('\n[PAGE NUMBER]:', page_number)
+
                 if not steam_api.is_game_owned(configs.get_base_config('verify_url', ''), ):
                     print('Steam Cookie Expired, Please Login')
                     exit(0)
-
-                print('\n[PAGE NUMBER]:', page_number)
 
                 content = py_api.get_rank_list(page_number, page_size, sort_key)
                 if len(content) == 0:
