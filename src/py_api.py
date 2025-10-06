@@ -110,7 +110,7 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True,
         for order in order_list:
             key_price = float(util.get_json_value(order, 'keyPrice', '999'))
             real_discount = key_price / float(steam_price)
-            print(f'\n[Game ID]: {game_id} [Real Price]: {key_price} [Real Discount]: {real_discount:.4f}')
+            print(f'\n[Game ID]: {game_id} [Real Price]: {key_price:.2f} [Real Discount]: {real_discount:.4f}')
 
             # 绝大多数在此返回，再次精确判定预算，有卡额外减去卡牌金额计算
             if total_price + key_price > max_budget:
@@ -118,7 +118,7 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True,
             if sort_key == const.sort_key_discount and have_card:
                 key_price -= card_price
                 real_discount = key_price / float(steam_price)
-                print(f'\n[Game ID]: {game_id} [After Card Price]: {key_price} [After Card Discount]: {real_discount:.4f}')
+                print(f'[After Card Price]: {key_price:.2f} [After Card Discount]: {real_discount:.4f}')
             if key_price > max_price or real_discount > max_discount:
                 return False, 'No Orders Meet the Filter', 0
 
