@@ -155,14 +155,14 @@ if __name__ == '__main__':
                             if sort_key == const.sort_key_discount:
                                 next_loop = True
                                 break
-
                         if configs.get_pay_config('auto_pay', False):
                             success, msg, order_price = py_api.pay_order(
                                 game_id,
                                 max_price_real,
                                 max_discount_real,
                                 buy_game_info['steam_price'],
-                                confirm_pause
+                                confirm_pause,
+                                have_card
                             )
                             if success:
                                 buy_game_info['py_price'] = order_price

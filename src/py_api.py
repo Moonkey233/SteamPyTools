@@ -7,7 +7,6 @@ import atexit
 import requests
 import threading
 from config import configs
-from main_scan import have_card
 
 
 pay_map     = {}
@@ -74,7 +73,7 @@ def get_list_sale(game_id):
         return []
 
 
-def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True):
+def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True, have_card=False):
     """根据游戏id发起最优符合条件的支付请求，不符合条件不支付"""
     global total_price, total_order, pay_map
 
@@ -119,6 +118,7 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
             if sort_key == const.sort_key_discount and have_card:
                 key_price -= card_price
                 real_discount = key_price / float(steam_price)
+                print(f'\n[Game ID]: {game_id} [After Card Price]: {key_price} [After Card Discount]: {real_discount:.4f}')
             if key_price > max_price or real_discount > max_discount:
                 return False, 'No Orders Meet the Filter', 0
 

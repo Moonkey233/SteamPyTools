@@ -5,7 +5,7 @@ import py_api
 import steam_api
 import threading
 from config import configs
-
+from src.main_scan import have_card
 
 stop_event = threading.Event()
 
@@ -29,7 +29,8 @@ def listen_game(listen_id, listen_price):
                     max_price       = listen_price,
                     max_discount    = 1.0,
                     steam_price     = steam_price,
-                    confirm_pause   = False
+                    confirm_pause   = False,
+                    have_card       = False
                 )
 
                 if ok:
