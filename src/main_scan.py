@@ -11,9 +11,12 @@ from bs4 import BeautifulSoup
 
 urllib3.disable_warnings(urllib3.exceptions.InsecureRequestWarning)
 
+have_card = False
 
 def get_can_buy_from_steam(url, headers, cookies):
     """爬取steam游戏页面并判定是否可购买"""
+    global have_card
+    have_card = False
     resp = requests.get(url, headers=headers, cookies=cookies, verify=False)
     data = resp.text
 
@@ -39,6 +42,7 @@ def get_can_buy_from_steam(url, headers, cookies):
     if data.find(const.steam_text_card) != -1:
         print('>>> Card <<<')
         card = True
+        have_card = True
     else:
         print('>>> No Card <<<')
 
@@ -75,7 +79,7 @@ def get_can_buy_from_steam_with_cache(url, headers, cookies, cache_info):
 
 
 if __name__ == '__main__':
-    sort_key        = configs.get_base_config('sort_key', '')
+    sort_key        = configs.get_base_config('sort_key', const.sort_key_discount)
     page_size       = configs.get_base_config('page_size', 0)
     loop_sleep_time = configs.get_base_config('loop_sleep_time', 0)
 

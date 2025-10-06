@@ -23,6 +23,7 @@ listen_list = [
 
 
 # ==================== 扫描模式过滤器 ====================
+card_price              = 1.6       # 卡牌价格，单位：元，可为小数，若有卡则价格折扣判定减去该值，仅扫描折扣模式
 max_price_display       = 9999      # py榜单展示最大CDK价格，一般应大于等于实际价格，仅检测用，实际购买以实际价格为准，仅扫描价格模式
 max_price_real          = 50        # 接受的最大CDK价格，实际价格比该数字高则不计入，单位：元，支持小数，仅扫描模式
 max_discount_display    = 0.05      # py榜单展示的最高折扣，一般应大于等于实际折扣，仅检测用，实际购买以实际折扣为准，仅扫描折扣模式
@@ -86,6 +87,7 @@ listen_config = {
 }
 
 filter_config = {
+    'card_price'            : card_price,
     'max_price_display'     : max_price_display,
     'max_price_real'        : max_price_real,
     'max_discount_display'  : max_discount_display,

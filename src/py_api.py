@@ -7,6 +7,7 @@ import atexit
 import requests
 import threading
 from config import configs
+from main_scan import have_card
 
 
 pay_map     = {}
@@ -82,6 +83,8 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
     pay_type        = configs.get_pay_config('pay_type', 'AL')
     promo_code_id   = configs.get_pay_config('promo_code_id', '')
     use_balance     = configs.get_pay_config('use_balance', False)
+    sort_key        = configs.get_base_config('sort_key', const.sort_key_discount)
+    card_price      = configs.get_filter_config('card_price', 0)
     data = {
         'payType': pay_type,
         'promoCodeId': promo_code_id,
@@ -110,8 +113,13 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True)
             real_discount = key_price / float(steam_price)
             print(f'\n[Game ID]: {game_id} [Real Price]: {key_price} [Real Discount]: {real_discount:.4f}')
 
-            # 绝大多数在此返回，再次精确判定预算
-            if key_price > max_price or real_discount > max_discount or total_price + key_price > max_budget:
+            # 绝大多数在此返回，再次精确判定预算，有卡额外减去卡牌金额计算
+            if total_price + key_price > max_budget:
+                return False, 'No Orders Meet the Filter', 0
+            if sort_key == const.sort_key_discount and have_card:
+                key_price -= card_price
+                real_discount = key_price / float(steam_price)
+            if key_price > max_price or real_discount > max_discount:
                 return False, 'No Orders Meet the Filter', 0
 
             if configs.get_pay_config('pause_beep', False):
