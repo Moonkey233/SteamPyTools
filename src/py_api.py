@@ -126,7 +126,6 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True,
                 util.beep()
 
             if confirm_pause:
-                return False, 'Canceled by User', 1
                 if input('<<< ----------!!![IMPORTANT]!!!---------- >>> Press Input [N/n] to Cancel: ').strip().lower() == 'n':
                     return False, 'Canceled by User', 1
 
