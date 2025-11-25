@@ -8,7 +8,7 @@ page_number     = 1                                             # 从py的第几
 max_page        = 300                                           # 一共抓取py前多少页
 page_size       = 50                                            # 每一页的大小
 loop_sleep_time = 600                                           # 循环检测间隔时间，单位：秒，<=0时只执行一次
-sort_key        = const.sort_key_discount                       # sort_key_discount 折扣(一般用于加库存价值) / sort_key_price 价格(一般用于挂卡控制成本)
+sort_key        = const.sort_key_price                          # sort_key_discount 折扣(一般用于加库存价值) / sort_key_price 价格(一般用于挂卡控制成本)
 # ==================== 基本设置 ====================
 
 
@@ -25,9 +25,9 @@ listen_list = [
 # ==================== 扫描模式过滤器 ====================
 card_price              = 1.6       # 卡牌价格，单位：元，可为小数，若有卡则价格折扣判定减去该值，仅扫描折扣模式
 max_price_display       = 9999      # py榜单展示最大CDK价格，一般应大于等于实际价格，仅检测用，实际购买以实际价格为准，仅扫描价格模式
-max_price_real          = 50        # 接受的最大CDK价格，实际价格比该数字高则不计入，单位：元，支持小数，仅扫描模式
+max_price_real          = 1.01      # 接受的最大CDK价格，实际价格比该数字高则不计入，单位：元，支持小数，仅扫描模式
 max_discount_display    = 1.05      # py榜单展示的最高折扣，一般应大于等于实际折扣，仅检测用，实际购买以实际折扣为准，仅扫描折扣模式
-max_discount_real       = 0.031     # 接受的最高折扣，实际折扣比该数字高则不计入，0.05指 -95% off，仅扫描模式
+max_discount_real       = 1.031     # 接受的最高折扣，实际折扣比该数字高则不计入，0.05指 -95% off，仅扫描模式
 must_have_card          = False     # 是否必须有卡，False则只判断是否已入库、是否资料受限，仅扫描模式
 must_not_free           = True      # 是否排除免费游戏，False则符合条件的免费游戏也会可购买，仅扫描模式
 # ==================== 扫描模式过滤器 ====================
