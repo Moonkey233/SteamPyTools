@@ -116,6 +116,7 @@ def pay_order(game_id, max_price, max_discount, steam_price, confirm_pause=True,
             if total_price + key_price > max_budget:
                 return False, 'No Orders Meet the Filter', 0
             if sort_key == const.sort_key_discount and have_card:
+            # if have_card:
                 key_price -= card_price
                 real_discount = key_price / float(steam_price)
                 print(f'[After Card Price]: {key_price:.2f} [After Card Discount]: {real_discount:.4f}')
